@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -30,6 +31,7 @@ public class UI extends Application{
 	
 	private Group displayGroup = new Group();		//TODO: add to group?
 	private BorderPane canvas = new BorderPane();			// parent pane
+	private ScrollPane scrollPane = new ScrollPane();
 	private Pane simulationPane = new Pane();				// simulation pane TODO: make infinite
 	private Pane controlPane = new Pane();					// control pane (for adding buttons)
 	private HBox controlBox = new HBox();					// for containing buttons
@@ -134,8 +136,9 @@ public class UI extends Application{
 	public void initialisePanes() {
 		initialiseButtons();
 		controlPane.getChildren().add(controlBox);
+		scrollPane.setContent(simulationPane);
 		canvas.setTop(controlPane);
-		canvas.setCenter(simulationPane);
+		canvas.setCenter(scrollPane);
 	}
 	
 	public static void main(String[] args) {
