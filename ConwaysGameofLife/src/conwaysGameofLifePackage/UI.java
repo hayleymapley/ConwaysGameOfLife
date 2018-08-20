@@ -115,10 +115,22 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		Grid worldGrid = new Grid();
-		//put following two lines into own method
-		AliveCell cell = new AliveCell(); 				// TODO: make better way of initialising positions of cells at begenning of simulation (mouse click or random 'seed')
-		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
+		for (int i = 0; i<13; i++) {
+			initialiseAliveCells(worldGrid);
+		}
+		
 		drawCells(worldGrid.getAliveCells()); 			// calls on HashMap in grid
+	}
+	
+	/*
+	 * A method to set up the initial alive cells in a testing configuration  TODO: make this random or on click
+	 * 
+	 * @param worldGrid - the Grid object the simulation is running
+	 */
+	public void initialiseAliveCells(Grid worldGrid) {
+		AliveCell cell = new AliveCell(); 				// TODO: make better way of initializing positions of cells at beginning of simulation (mouse click or random 'seed')
+		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
+		
 	}
 	
 	/**
@@ -152,12 +164,12 @@ public class UI extends Application{
 	 */
 	public Position generatePosition() {
 		//TODO make realtive to col/row eg height * row
-		Position newPosition = new Position(20, 20);
+		Position newPosition = new Position((int)(Math.random()*20), (int)(Math.random()*20));
 		return newPosition;
 	}
 	
 	/**
-	 * Initialises panes and pane nesting
+	 * Initializes panes and pane nesting
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
