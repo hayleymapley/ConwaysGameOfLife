@@ -1,5 +1,8 @@
 package conwaysGameofLifePackage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -34,11 +37,11 @@ public class UI extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		initialisePanes();
-		//initialise grid
+		initialiseGrid();
 		
 		//create cells
 		//add cells to map
-		Cell newCell = new Cell();	
+		AliveCell newCell = new AliveCell();
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -91,6 +94,12 @@ public class UI extends Application{
 		restart.setText("Restart");
 		quit.setText("Quit");
 	}
+	public void initialiseGrid() {
+		Grid worldGrid = new Grid();
+		AliveCell cell = new AliveCell();
+		worldGrid.addCell(cell);
+		drawCells(worldGrid.getAliveCells());
+	}
 	
 	public void updateGrid() {
 		//TODO: everything
@@ -98,9 +107,9 @@ public class UI extends Application{
 		//call update on alive cells
 	}
 	
-	public void drawCells() {
+	public void drawCells(Map<Position, AliveCell> aliveCells) {
 		//TODO: everything
-		//takes hashMap parameter
+		for (Iterator<Map.Entry<Position, AliveCell> k = aliveCells.entrySet().iterator(); >)
 		//draws rect at position
 	}
 	
