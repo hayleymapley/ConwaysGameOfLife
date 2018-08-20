@@ -1,6 +1,5 @@
 package conwaysGameofLifePackage;
 
-import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -15,8 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.Group;
 import javafx.stage.*;
 
 /**This class draws the UI and any cells contained in the Grids HashMap
@@ -51,7 +50,7 @@ public class UI extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		initialisePanes();
-		initialiseGrid();
+		initialiseWorldGrid();
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -103,9 +102,10 @@ public class UI extends Application{
 		restart.setText("Restart");
 		quit.setText("Quit");
 		controlBox.getChildren().addAll(playPause, restart, quit);
+//		controlBox.setAlignment(Pos.CENTER); DOESN'T WORK TODO: Figure out how to align buttons to top
 	}
 	
-	public void initialiseGrid() {
+	public void initialiseWorldGrid() { //initial start method - to test functionality
 		Grid worldGrid = new Grid();
 		AliveCell cell = new AliveCell();
 		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
@@ -119,29 +119,24 @@ public class UI extends Application{
 	}
 	
 	public void drawCells(Map<Position, AliveCell> aliveCells) {
-		//TODO: everything
 		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
-//			e.getKey();
 			simulationPane.getChildren().add(e.getValue());
 			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
 		}
 	}
 	
 	public Position generatePosition() {
-		//TODO make realtive to col/row eg height * row
+		//TODO make relative to col/row eg height * row
 		Position newPosition = new Position(20, 20);
 		return newPosition;
 	}
 	
 	public void initialisePanes() {
 		initialiseButtons();
-		
 		controlPane.getChildren().add(controlBox);
-		controlBox.setAlignment(Pos.CENTER);
 		canvas.setTop(controlPane);
 		canvas.setCenter(simulationPane);
 	}
-	
 	
 	public static void main(String[] args) {
 		launch(args);
