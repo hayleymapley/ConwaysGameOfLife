@@ -115,7 +115,7 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		Grid worldGrid = new Grid();
-		for (int i = 0; i<13; i++) {
+		for (int i = 0; i<80; i++) {
 			initialiseAliveCells(worldGrid);
 		}
 		
@@ -164,7 +164,9 @@ public class UI extends Application{
 	 */
 	public Position generatePosition() {
 		//TODO make realtive to col/row eg height * row
-		Position newPosition = new Position((int)(Math.random()*20), (int)(Math.random()*20));
+		int col = (int)(Math.random()*20);	//gives random column number between 0 and 20
+		int row = (int)(Math.random()*20);	//gives random row number between 0 and 20
+		Position newPosition = new Position(col * 5, row * 5);	//make this relative to cells size not just 5, what about positions already occupied
 		return newPosition;
 	}
 	
