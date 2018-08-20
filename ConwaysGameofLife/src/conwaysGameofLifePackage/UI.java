@@ -157,7 +157,7 @@ public class UI extends Application{
 	}
 	
 	/**
-	 * Initialises 
+	 * Initialises panes and pane nesting
 	 */
 	public void initialisePanes() {
 		initialiseButtons();

@@ -10,15 +10,21 @@ public class Grid {
 		
 	}
 	
+	/**
+	 * updates each cell withing the Grids Collection
+	 * 
+	 */
 	public void updateAliveCells() {
 		//get live cells and update each cell object. 
 		//test
 	}
 
-	public void drawCells() {
-		// draws cells into grid.
-		//includes color black/white
-	}
+	
+//	public void drawCells() {		//this has been moved to UI??
+//		// draws cells into grid.
+//		//includes color black/white
+//	}
+	
 	
 	public void addCell(Position position, AliveCell cell) {
 		aliveCells.put(position, cell);
