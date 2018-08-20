@@ -2,7 +2,6 @@ package conwaysGameofLifePackage;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -10,12 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.*;
 
@@ -24,6 +23,7 @@ public class UI extends Application{
 	private int startWidth = 600;
 	private int startHeight = 400;
 	
+	private Group displayGroup = new Group();		//TODO: add to group?
 	private BorderPane canvas = new BorderPane();			// parent pane
 	private Pane simulationPane = new Pane();				// simulation pane TODO: make infinite
 	private Pane controlPane = new Pane();					// control pane (for adding buttons)
@@ -38,10 +38,6 @@ public class UI extends Application{
 		
 		initialisePanes();
 		initialiseGrid();
-		
-		//create cells
-		//add cells to map
-		AliveCell newCell = new AliveCell();
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -61,7 +57,6 @@ public class UI extends Application{
 		primaryStage.show();
 		
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
-
 			int i = 0;	//to keep track of odd/even number of clicks so we can use as a toggle button
 			@Override
 			public void handle(ActionEvent event) {
@@ -93,7 +88,9 @@ public class UI extends Application{
 		playPause.setText("Play/Pause");
 		restart.setText("Restart");
 		quit.setText("Quit");
+		controlBox.getChildren().addAll(playPause, restart, quit);
 	}
+	
 	public void initialiseGrid() {
 		Grid worldGrid = new Grid();
 		AliveCell cell = new AliveCell();
@@ -123,12 +120,11 @@ public class UI extends Application{
 	
 	public void initialisePanes() {
 		initialiseButtons();
-		controlBox.getChildren().addAll(playPause, restart, quit);
+		
 		controlPane.getChildren().add(controlBox);
 		controlBox.setAlignment(Pos.CENTER);
 		canvas.setTop(controlPane);
 		canvas.setCenter(simulationPane);
-		
 	}
 	
 	
