@@ -5,9 +5,12 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
@@ -18,17 +21,19 @@ public class UI extends Application{
 	private int startWidth = 600;
 	private int startHeight = 400;
 	
-	private BorderPane canvas = new BorderPane();
-	private ScrollPane pane = new ScrollPane();
+	private BorderPane canvas = new BorderPane();	// parent pane
+	private ScrollPane pane = new ScrollPane();		// simulation pane
+	private Pane controlPane = new Pane();			// control pane (for adding buttons)
+	private HBox controlBox = new HBox();			// for containing buttons
 	
 	private Button playPause = new Button();
 	private Button restart = new Button();
-	private Button clear = new Button();
 	private Button quit = new Button();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		initialisePanes();
 		//initialise grid
 		//create cells
 		//add cells to map
@@ -47,12 +52,15 @@ public class UI extends Application{
 		timeline.play();
 		
 		primaryStage.setTitle("Game of Life");
-		
+		Scene mainScene = new Scene(canvas, startWidth, startHeight);
+		primaryStage.setScene(mainScene);
 		primaryStage.show();
 	}
 	
 	public void initialiseButtons() {
-		//TODO
+		playPause.setText("Play/Pause");
+		restart.setText("Restart");
+		quit.setText("Quit");
 	}
 	
 	public void updateGrid() {
@@ -65,6 +73,15 @@ public class UI extends Application{
 		//TODO: everything
 		//takes hashMap parameter
 		//draws rect at position
+	
+	public void initialisePanes() {
+		initialiseButtons();
+		controlBox.getChildren().addAll(playPause, restart, quit);
+		controlPane.getChildren().add(controlBox);
+		controlBox.setAlignment(Pos.CENTER);
+		canvas.setTop(controlPane);
+		canvas.setCenter(pane);
+		
 	}
 	
 	
