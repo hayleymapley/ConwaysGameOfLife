@@ -129,7 +129,14 @@ public class UI extends Application{
 	 * @param worldGrid - the Grid object the simulation is running
 	 */
 	public void initialiseAliveCells(Grid worldGrid) {
-		AliveCell cell = new AliveCell(generatePosition("x"), generatePosition("y")); 				// TODO: make better way of initializing positions of cells at beginning of simulation (mouse click or random 'seed')
+		int potnX = generatePosition("x");
+		int potnY = generatePosition("y");
+		//call checkmethod
+		while (!(isCurrentPositionValid(potnX, potnY))) {
+			potnX = generatePosition("x");
+			potnY = generatePosition("y");
+		}
+		AliveCell cell = new AliveCell(potnX ,potnY); 				// TODO: make better way of initializing positions of cells at beginning of simulation (mouse click or random 'seed')
 		worldGrid.addCell(cell); 	// adds the cell to the grid
 		
 	}
@@ -160,10 +167,6 @@ public class UI extends Application{
 			
 		}
 		
-//		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
-//			simulationPane.getChildren().add(e.getValue());
-//			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
-//		}
 	}
 	
 	/**
@@ -177,13 +180,22 @@ public class UI extends Application{
 		int row;
 		 switch (pos) {
 		 case "x" :
-			 col = (int)(Math.random()*20);	//gives random column number between 0 and 20
+			 col = (int)(Math.random()*15);	//gives random column number between 0 and 20
 			 return col*Cell.getSize();
 		 case "y" :
-			 row = (int)(Math.random()*20);	//gives random row number between 0 and 20
+			 row = (int)(Math.random()*15);	//gives random row number between 0 and 20
 			 return row*Cell.getSize();
 		 }
 		 return 0;
+	}
+	
+	public boolean isCurrentPositionValid(int x, int y) {
+		for (Node c: worldGrid.getCellGroup().getChildren()) {
+			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
