@@ -1,5 +1,6 @@
 package conwaysGameofLifePackage;
 
+import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -18,6 +19,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.*;
 
+/**This class draws the UI and any cells contained in the Grids HashMap
+ * 
+ * @author Group3 
+ *
+ */
 public class UI extends Application{
 	
 	private int startWidth = 600;
@@ -33,6 +39,14 @@ public class UI extends Application{
 	private Button restart = new Button();
 	private Button quit = new Button();
 
+	/**
+	 * Main Entry point for the application
+	 * 
+	 * Initializes Panes (nests panes from scene down)
+	 * Initializes Grid (adds initial layout of AliveCells)
+	 * Runs Timeline
+	 * EventHandlers for buttons
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -114,6 +128,7 @@ public class UI extends Application{
 	}
 	
 	public Position generatePosition() {
+		//TODO make realtive to col/row eg height * row
 		Position newPosition = new Position(20, 20);
 		return newPosition;
 	}
