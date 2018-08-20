@@ -106,20 +106,13 @@ public class UI extends Application{
 		playPause.setText("Play/Pause");
 		restart.setText("Restart");
 		quit.setText("Quit");
-		controlBox.getChildren().addAll(playPause, restart, quit);
-//		controlBox.setAlignment(Pos.CENTER); DOESN'T WORK TODO: Figure out how to align buttons to top
 	}
-<<<<<<< HEAD
 	/**
 	 * Method to set up initial state of the simulation
 	 * <p>
 	 * creates grid, creates initial AliveCells, Initial Draw() of simulation
 	 */
 	public void initialiseGrid() {
-=======
-	
-	public void initialiseWorldGrid() { //initial start method - to test functionality
->>>>>>> branch 'master' of git@gitlab.ecs.vuw.ac.nz:cholmojuli/ConwaysGameofLife.git
 		Grid worldGrid = new Grid();
 		//put following two lines into own method
 		AliveCell cell = new AliveCell(); 				// TODO: make better way of initialising positions of cells at begenning of simulation (mouse click or random 'seed')
@@ -157,7 +150,7 @@ public class UI extends Application{
 	 * @return - returns a new Position Object
 	 */
 	public Position generatePosition() {
-		//TODO make relative to col/row eg height * row
+		//TODO make realtive to col/row eg height * row
 		Position newPosition = new Position(20, 20);
 		return newPosition;
 	}
