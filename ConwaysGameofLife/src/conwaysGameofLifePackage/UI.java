@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
+import javafx.scene.Group;
 import javafx.stage.*;
 
 /**This class draws the UI and any cells contained in the Grids HashMap
@@ -28,7 +29,9 @@ public class UI extends Application{
 	private int startWidth = 600;
 	private int startHeight = 400;
 	
+	private Group displayGroup = new Group();		//TODO: add to group?
 	private BorderPane canvas = new BorderPane();			// parent pane
+	private ScrollPane scrollPane = new ScrollPane();
 	private Pane simulationPane = new Pane();				// simulation pane TODO: make infinite
 	private Pane controlPane = new Pane();					// control pane (for adding buttons)
 	private HBox controlBox = new HBox();					// for containing buttons
@@ -49,11 +52,7 @@ public class UI extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		initialisePanes();
-		initialiseGrid();
-		
-		//create cells
-		//add cells to map
-		AliveCell newCell = new AliveCell();
+		initialiseWorldGrid();
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -73,7 +72,6 @@ public class UI extends Application{
 		primaryStage.show();
 		
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
-
 			int i = 0;	//to keep track of odd/even number of clicks so we can use as a toggle button
 			@Override
 			public void handle(ActionEvent event) {
@@ -108,13 +106,20 @@ public class UI extends Application{
 		playPause.setText("Play/Pause");
 		restart.setText("Restart");
 		quit.setText("Quit");
+		controlBox.getChildren().addAll(playPause, restart, quit);
+//		controlBox.setAlignment(Pos.CENTER); DOESN'T WORK TODO: Figure out how to align buttons to top
 	}
+<<<<<<< HEAD
 	/**
 	 * Method to set up initial state of the simulation
 	 * <p>
 	 * creates grid, creates initial AliveCells, Initial Draw() of simulation
 	 */
 	public void initialiseGrid() {
+=======
+	
+	public void initialiseWorldGrid() { //initial start method - to test functionality
+>>>>>>> branch 'master' of git@gitlab.ecs.vuw.ac.nz:cholmojuli/ConwaysGameofLife.git
 		Grid worldGrid = new Grid();
 		//put following two lines into own method
 		AliveCell cell = new AliveCell(); 				// TODO: make better way of initialising positions of cells at begenning of simulation (mouse click or random 'seed')
@@ -140,9 +145,7 @@ public class UI extends Application{
 	 * @param aliveCells - collection of all alive cells from the Grids 
 	 */
 	public void drawCells(Map<Position, AliveCell> aliveCells) {
-		//TODO: everything
 		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
-//			e.getKey();
 			simulationPane.getChildren().add(e.getValue());
 			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
 		}
@@ -154,7 +157,7 @@ public class UI extends Application{
 	 * @return - returns a new Position Object
 	 */
 	public Position generatePosition() {
-		//TODO make realtive to col/row eg height * row
+		//TODO make relative to col/row eg height * row
 		Position newPosition = new Position(20, 20);
 		return newPosition;
 	}
@@ -164,14 +167,11 @@ public class UI extends Application{
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
-		controlBox.getChildren().addAll(playPause, restart, quit);
 		controlPane.getChildren().add(controlBox);
-		controlBox.setAlignment(Pos.CENTER);
+		scrollPane.setContent(simulationPane);
 		canvas.setTop(controlPane);
-		canvas.setCenter(simulationPane);
-		
+		canvas.setCenter(scrollPane);
 	}
-	
 	
 	public static void main(String[] args) {
 		launch(args);
