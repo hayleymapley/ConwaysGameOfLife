@@ -98,7 +98,7 @@ public class UI extends Application{
 		Grid worldGrid = new Grid();
 		AliveCell cell = new AliveCell();
 		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
-		drawCells(worldGrid.getAliveCells()); 			// calls on hashmap in grid
+		drawCells(worldGrid.getAliveCells()); 			// calls on HashMap in grid
 	}
 	
 	public void updateGrid() {
