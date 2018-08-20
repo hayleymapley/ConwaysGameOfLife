@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.stage.*;
 
 /**This class draws the UI and any cells contained in the Grids HashMap
@@ -29,12 +30,13 @@ public class UI extends Application{
 	private int startWidth = 600;
 	private int startHeight = 400;
 	
-	private Group displayGroup = new Group();		//TODO: add to group?
+//	private Group displayGroup = new Group();		//TODO: add to group?
 	private BorderPane canvas = new BorderPane();			// parent pane
 	private ScrollPane scrollPane = new ScrollPane();
 	private Pane simulationPane = new Pane();				// simulation pane TODO: make infinite
 	private Pane controlPane = new Pane();					// control pane (for adding buttons)
 	private HBox controlBox = new HBox();					// for containing buttons
+	private Grid worldGrid = new Grid();
 	
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -51,8 +53,8 @@ public class UI extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		initialisePanes();
 		initialiseWorldGrid();
+		initialisePanes();
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -114,12 +116,11 @@ public class UI extends Application{
 	 * creates grid, creates initial AliveCells, Initial Draw() of simulation
 	 */
 	public void initialiseWorldGrid() {
-		Grid worldGrid = new Grid();
+		worldGrid = new Grid();
 		for (int i = 0; i<80; i++) {
 			initialiseAliveCells(worldGrid);
 		}
-		
-		drawCells(worldGrid.getAliveCells()); 			// calls on HashMap in grid
+		simulationPane.getChildren().add(worldGrid.getCellGroup()); 			// calls on HashMap in grid
 	}
 	
 	/*
@@ -128,8 +129,8 @@ public class UI extends Application{
 	 * @param worldGrid - the Grid object the simulation is running
 	 */
 	public void initialiseAliveCells(Grid worldGrid) {
-		AliveCell cell = new AliveCell(); 				// TODO: make better way of initializing positions of cells at beginning of simulation (mouse click or random 'seed')
-		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
+		AliveCell cell = new AliveCell(generatePosition("x"), generatePosition("y")); 				// TODO: make better way of initializing positions of cells at beginning of simulation (mouse click or random 'seed')
+		worldGrid.addCell(cell); 	// adds the cell to the grid
 		
 	}
 	
@@ -150,11 +151,19 @@ public class UI extends Application{
 	 * 
 	 * @param aliveCells - collection of all alive cells from the Grids 
 	 */
-	public void drawCells(Map<Position, AliveCell> aliveCells) {
-		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
-			simulationPane.getChildren().add(e.getValue());
-			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
+	public void drawCells(Group group) {
+		
+		for (Node c: group.getChildren()) {
+			Cell cell = (AliveCell) c;
+			//TODO:
+			simulationPane.getChildren().add(cell);		// may need to cast
+			
 		}
+		
+//		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
+//			simulationPane.getChildren().add(e.getValue());
+//			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
+//		}
 	}
 	
 	/**
@@ -162,12 +171,19 @@ public class UI extends Application{
 	 * 
 	 * @return - returns a new Position Object
 	 */
-	public Position generatePosition() {
-		//TODO make realtive to col/row eg height * row
-		int col = (int)(Math.random()*20);	//gives random column number between 0 and 20
-		int row = (int)(Math.random()*20);	//gives random row number between 0 and 20
-		Position newPosition = new Position(col * 5, row * 5);	//make this relative to cells size not just 5, what about positions already occupied
-		return newPosition;
+	public int generatePosition(String pos) {
+		//TODO make relative to col/row eg height * row
+		int col;
+		int row;
+		 switch (pos) {
+		 case "x" :
+			 col = (int)(Math.random()*20);	//gives random column number between 0 and 20
+			 return col*Cell.getSize();
+		 case "y" :
+			 row = (int)(Math.random()*20);	//gives random row number between 0 and 20
+			 return row*Cell.getSize();
+		 }
+		 return 0;
 	}
 	
 	/**
@@ -176,6 +192,7 @@ public class UI extends Application{
 	public void initialisePanes() {
 		initialiseButtons();
 		controlPane.getChildren().add(controlBox);
+		
 		scrollPane.setContent(simulationPane);
 		canvas.setTop(controlPane);
 		canvas.setCenter(scrollPane);
