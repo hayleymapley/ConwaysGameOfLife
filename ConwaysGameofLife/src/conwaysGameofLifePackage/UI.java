@@ -112,7 +112,7 @@ public class UI extends Application{
 	 * <p>
 	 * creates grid, creates initial AliveCells, Initial Draw() of simulation
 	 */
-	public void initialiseGrid() {
+	public void initialiseWorldGrid() {
 		Grid worldGrid = new Grid();
 		//put following two lines into own method
 		AliveCell cell = new AliveCell(); 				// TODO: make better way of initialising positions of cells at begenning of simulation (mouse click or random 'seed')

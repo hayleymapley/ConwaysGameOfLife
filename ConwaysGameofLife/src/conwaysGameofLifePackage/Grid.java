@@ -12,6 +12,7 @@ public class Grid {
 	
 	public void updateAliveCells() {
 		//get live cells and update each cell object. 
+		//test
 	}
 
 	public void drawCells() {
