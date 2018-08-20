@@ -1,6 +1,5 @@
 package conwaysGameofLifePackage;
 
-import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -40,7 +39,7 @@ public class UI extends Application{
 
 	/**
 	 * Main Entry point for the application
-	 * 
+	 * <p>
 	 * Initializes Panes (nests panes from scene down)
 	 * Initializes Grid (adds initial layout of AliveCells)
 	 * Runs Timeline
