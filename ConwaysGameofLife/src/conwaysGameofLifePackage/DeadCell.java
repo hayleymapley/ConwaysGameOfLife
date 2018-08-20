@@ -4,6 +4,9 @@ public class DeadCell extends Cell {
 
 	private boolean isActive;
 	
+	public DeadCell() {
+		super();
+	}
 	
 	@Override
 	public void update() { 

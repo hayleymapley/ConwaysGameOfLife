@@ -35,9 +35,10 @@ public class UI extends Application{
 		
 		initialisePanes();
 		//initialise grid
+		
 		//create cells
 		//add cells to map
-	
+		Cell newCell = new Cell();	
 		
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
@@ -46,8 +47,6 @@ public class UI extends Application{
 				//draw cells - calling on grid which has hashmap
 			}
 		});
-		
-		
 		
 		Timeline timeline = new Timeline(frame);
 		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
