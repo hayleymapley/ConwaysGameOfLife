@@ -106,6 +106,7 @@ public class UI extends Application{
 		playPause.setText("Play/Pause");
 		restart.setText("Restart");
 		quit.setText("Quit");
+		controlBox.getChildren().addAll(playPause, restart, quit);
 	}
 	/**
 	 * Method to set up initial state of the simulation
@@ -156,7 +157,7 @@ public class UI extends Application{
 	}
 	
 	/**
-	 * 
+	 * Initialises 
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
