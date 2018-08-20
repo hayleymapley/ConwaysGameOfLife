@@ -47,6 +47,8 @@ public class UI extends Application{
 			}
 		});
 		
+		
+		
 		Timeline timeline = new Timeline(frame);
 		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
 		timeline.play();
@@ -55,6 +57,34 @@ public class UI extends Application{
 		Scene mainScene = new Scene(canvas, startWidth, startHeight);
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
+		
+		playPause.setOnAction(new EventHandler<ActionEvent>() {
+
+			int i = 0;	//to keep track of odd/even number of clicks so we can use as a toggle button
+			@Override
+			public void handle(ActionEvent event) {
+				if(i%2 == 0) {
+					timeline.pause();		//on first press will pause
+				} else {
+					timeline.play();		//every second press will play
+				}
+				i++;
+			}
+		});
+		
+		restart.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		quit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				primaryStage.close();
+			}
+		});
 	}
 	
 	public void initialiseButtons() {
@@ -73,6 +103,7 @@ public class UI extends Application{
 		//TODO: everything
 		//takes hashMap parameter
 		//draws rect at position
+	}
 	
 	public void initialisePanes() {
 		initialiseButtons();
