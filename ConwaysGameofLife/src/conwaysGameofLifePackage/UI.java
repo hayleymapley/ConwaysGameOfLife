@@ -24,10 +24,10 @@ public class UI extends Application{
 	private int startWidth = 600;
 	private int startHeight = 400;
 	
-	private BorderPane canvas = new BorderPane();	// parent pane
-	private ScrollPane pane = new ScrollPane();		// simulation pane
-	private Pane controlPane = new Pane();			// control pane (for adding buttons)
-	private HBox controlBox = new HBox();			// for containing buttons
+	private BorderPane canvas = new BorderPane();			// parent pane
+	private Pane simulationPane = new Pane();				// simulation pane TODO: make infinite
+	private Pane controlPane = new Pane();					// control pane (for adding buttons)
+	private HBox controlBox = new HBox();					// for containing buttons
 	
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -97,8 +97,8 @@ public class UI extends Application{
 	public void initialiseGrid() {
 		Grid worldGrid = new Grid();
 		AliveCell cell = new AliveCell();
-		worldGrid.addCell(cell);
-		drawCells(worldGrid.getAliveCells());
+		worldGrid.addCell(generatePosition(), cell); 	// adds the cell to the grid
+		drawCells(worldGrid.getAliveCells()); 			// calls on hashmap in grid
 	}
 	
 	public void updateGrid() {
@@ -109,8 +109,16 @@ public class UI extends Application{
 	
 	public void drawCells(Map<Position, AliveCell> aliveCells) {
 		//TODO: everything
-		for (Iterator<Map.Entry<Position, AliveCell> k = aliveCells.entrySet().iterator(); >)
-		//draws rect at position
+		for (Map.Entry<Position, AliveCell> e : aliveCells.entrySet()) {
+//			e.getKey();
+			simulationPane.getChildren().add(e.getValue());
+			e.getValue().relocate(e.getKey().getxPos(), e.getKey().getyPos());
+		}
+	}
+	
+	public Position generatePosition() {
+		Position newPosition = new Position(20, 20);
+		return newPosition;
 	}
 	
 	public void initialisePanes() {
@@ -119,7 +127,7 @@ public class UI extends Application{
 		controlPane.getChildren().add(controlBox);
 		controlBox.setAlignment(Pos.CENTER);
 		canvas.setTop(controlPane);
-		canvas.setCenter(pane);
+		canvas.setCenter(simulationPane);
 		
 	}
 	

@@ -19,15 +19,10 @@ public class Grid {
 		//includes color black/white
 	}
 	
-	public void addCell(AliveCell cell) {
-		aliveCells.put(generatePosition(), cell);
+	public void addCell(Position position, AliveCell cell) {
+		aliveCells.put(position, cell);
 	}
 	
-	public Position generatePosition() {
-		Position newPosition = new Position(20, 20);
-		return newPosition;
-	}
-
 	public Map<Position, AliveCell> getAliveCells() {
 		return aliveCells;
 	}
