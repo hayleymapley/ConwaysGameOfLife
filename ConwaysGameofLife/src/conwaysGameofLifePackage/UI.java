@@ -152,23 +152,7 @@ public class UI extends Application{
 		//remove dead cells
 		//call update on alive cells
 	}
-	
-	/**
-	 * iterates through collection of all alive cells and draws them at their location (by adding them to simulation Pane)
-	 * 
-	 * @param aliveCells - collection of all alive cells from the Grids 
-	 */
-	public void drawCells(Group group) {
 		
-		for (Node c: group.getChildren()) {
-			Cell cell = (AliveCell) c;
-			//TODO:
-			simulationPane.getChildren().add(cell);		// may need to cast
-			
-		}
-		
-	}
-	
 	/**
 	 * Generates a random Position object for an Alive cell, used for initialising simulation
 	 * 
