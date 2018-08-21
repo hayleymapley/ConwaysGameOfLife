@@ -124,7 +124,7 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
-		for (int i = 0; i<100; i++) {
+		for (int i = 0; i<40; i++) {
 			initialiseAliveCells(worldGrid);
 		}
 		simulationPane.getChildren().add(worldGrid.getCellGroup()); 			// calls on HashMap in grid
