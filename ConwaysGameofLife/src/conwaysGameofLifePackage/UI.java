@@ -1,5 +1,6 @@
 package conwaysGameofLifePackage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -37,6 +38,7 @@ public class UI extends Application{
 	private Pane controlPane = new Pane();					// control pane (for adding buttons)
 	private HBox controlBox = new HBox();					// for containing buttons
 	private Grid worldGrid = new Grid();
+	private ArrayList<AliveCell> condemned = new ArrayList<>();	//holds alive cells that will die next turn (returned false for isAlive)
 	
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -56,10 +58,12 @@ public class UI extends Application{
 		initialiseWorldGrid();
 		initialisePanes();
 		
-		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
+		KeyFrame frame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				//TODO check survival boolean
+				addCondemned();
+				removeAliveCells();
 				updateGrid();
 				//update cells - calling on grid
 				//draw cells - calling on grid which has hashmap
@@ -179,6 +183,35 @@ public class UI extends Application{
 		 }
 		 return 0;
 	}
+	
+	public void removeAliveCells() {
+		for(AliveCell c : condemned) {
+			worldGrid.getCellGroup().getChildren().remove(c);
+		}
+	}
+	
+	public void addCondemned() {
+		condemned = new ArrayList<>();
+		for(Node c : worldGrid.getCellGroup().getChildren()) {
+			AliveCell cell = (AliveCell) c;
+			if(!cell.isCellAlive()) {
+				System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count = " + cell.getNeighbourCount());
+				condemned.add((AliveCell) c);
+			}
+		}
+		System.out.println("Condemned size =" + condemned.size());
+	}
+	
+//	public void removeAliveCells() {
+//		int size = worldGrid.getCellGroup().getChildren().size();
+//		for(int i = 0; i < size; i++) {
+//			AliveCell cell = (AliveCell)worldGrid.getCellGroup().getChildren().get(i);
+//			if(!cell.isCellAlive()) {
+//				worldGrid.getCellGroup().getChildren().remove(i);
+//				size --;
+//			}
+//		}
+//	}
 	
 //	public boolean isCurrentPositionValid(int x, int y) {
 //		for (Node c: worldGrid.getCellGroup().getChildren()) {

@@ -20,11 +20,7 @@ public class AliveCell extends Cell {
 	public void update(Grid worldGrid) {
 		// check whether cell survives next round
 		// generate dead cells in unoccupied neighbours (call spawn deadcells method)
-		
-		if(this.isCellAlive() == false) {
-			//this.setVisible(false);
-			worldGrid.getCellGroup().getChildren().remove(this);
-		}
+		this.willSurvive(worldGrid);
 	}
 
 	public void willSurvive(Grid worldGrid) {
@@ -34,9 +30,12 @@ public class AliveCell extends Cell {
 		if(neighbours == 2 || neighbours == 3) {
 			//return true;
 			this.setCellAlive(true);
+			System.out.println("neighbours " + neighbours);
 		}	
 		//return false;	
-		this.setCellAlive(false);
+		else {
+			this.setCellAlive(false);
+		}
 	}
 
 	public void spawnDeadCell() { 

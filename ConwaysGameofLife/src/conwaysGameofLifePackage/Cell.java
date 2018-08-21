@@ -10,6 +10,7 @@ public class Cell extends Rectangle {
 	private boolean isCellAlive;
 	private final static int size = 5;
 	private int xPos, yPos;
+	private int neighbourCount;
 
 	// constructors
 	public Cell() {
@@ -34,7 +35,7 @@ public class Cell extends Rectangle {
 		// if alive and > 3 neibours or < 2 neighbours, dies
 		// if dead has exactly 3 neighbours, becomes alive (add to group)
 
-		int neighbourCount = 0;
+		int count = 0;
 
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
 
@@ -42,39 +43,39 @@ public class Cell extends Rectangle {
 
 			// checks top left
 			if(this.getxPos() - size == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks top mid
 			if(this.getxPos() == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks top right
 			if(this.getxPos() + size == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks mid left
 			if(this.getxPos() - size == cell.getxPos() && this.getyPos() == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks mid right
 			if(this.getxPos() + size == cell.getxPos() && this.getyPos() == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks bottom left
 			if(this.getxPos() - size == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks bottom mid
 			if(this.getxPos() == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}
 			// checks bottom right
 			if(this.getxPos() + size == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
-				neighbourCount++;
+				count++;
 			}	
 		}
-		System.out.println(neighbourCount);
-
+		//System.out.println(this.getxPos() + " " + this.getyPos() + " count = " + count);
+		this.neighbourCount = count;
 		return neighbourCount;
 	}
 
@@ -106,6 +107,14 @@ public class Cell extends Rectangle {
 
 	public boolean isCellAlive() {
 		return isCellAlive;
+	}
+
+	public int getNeighbourCount() {
+		return neighbourCount;
+	}
+
+	public void setNeighbourCount(int neighbourCount) {
+		this.neighbourCount = neighbourCount;
 	}
 
 }
