@@ -33,6 +33,15 @@ public class Grid {
 		//get live cells and update each cell object. 
 		
 	}
+	
+	public boolean isCurrentPositionValid(int x, int y) {
+		for (Node c: this.getCellGroup().getChildren()) {
+			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void drawCells() {
 		// draws cells into grid.

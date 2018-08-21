@@ -117,7 +117,7 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
-		for (int i = 0; i<80; i++) {
+		for (int i = 0; i<101; i++) {
 			initialiseAliveCells(worldGrid);
 		}
 		simulationPane.getChildren().add(worldGrid.getCellGroup()); 			// calls on HashMap in grid
@@ -132,7 +132,7 @@ public class UI extends Application{
 		int potnX = generatePosition("x");
 		int potnY = generatePosition("y");
 		//call checkmethod
-		while (!(isCurrentPositionValid(potnX, potnY))) {
+		while (!(worldGrid.isCurrentPositionValid(potnX, potnY))) {
 			potnX = generatePosition("x");
 			potnY = generatePosition("y");
 		}
@@ -180,23 +180,23 @@ public class UI extends Application{
 		int row;
 		 switch (pos) {
 		 case "x" :
-			 col = (int)(Math.random()*15);	//gives random column number between 0 and 20
+			 col = (int)(Math.random()*10);	//gives random column number between 0 and 20
 			 return col*Cell.getSize();
 		 case "y" :
-			 row = (int)(Math.random()*15);	//gives random row number between 0 and 20
+			 row = (int)(Math.random()*10);	//gives random row number between 0 and 20
 			 return row*Cell.getSize();
 		 }
 		 return 0;
 	}
 	
-	public boolean isCurrentPositionValid(int x, int y) {
-		for (Node c: worldGrid.getCellGroup().getChildren()) {
-			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	public boolean isCurrentPositionValid(int x, int y) {
+//		for (Node c: worldGrid.getCellGroup().getChildren()) {
+//			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 	
 	/**
 	 * Initializes panes and pane nesting

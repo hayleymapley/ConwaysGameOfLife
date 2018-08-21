@@ -1,34 +1,49 @@
 package conwaysGameofLifePackage;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
-	
+
 	//fields
 	private boolean isCellAlive;
 	private final static int size = 5;
 	private int xPos, yPos;
-	
+
 	// constructors
 	public Cell() {
 		super(size, size, Color.BLACK);
-		
+
 	}
-	
+
 	public Cell(int xPos, int yPos) {
 		super(size, size, Color.BLACK);
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
-	
-	
+
+
 	//methods
 	public void update() { 
-		
-	}
 
+	}
 	
+//	public int checkNeighbours() {
+//		// if alive w 2 or 3 neighbours, stays alive
+//		// if alive and > 3 neibours or < 2 neighbours, dies
+//		// if dead has exactly 3 neighbours, becomes alive (add to group)
+//		
+//		int neighbourCount = 0;
+//		
+//		if(this.getxPos() - size )
+//		
+//		
+//		return neighbourCount;
+//		
+//	}
+
+
 	// accessor methods
 	public static int getSize() {
 		return size;
@@ -53,7 +68,7 @@ public class Cell extends Rectangle {
 	public void setCellAlive(boolean isCellAlive) {
 		this.isCellAlive = isCellAlive;
 	}
-	
+
 	public boolean isCellAlive() {
 		return isCellAlive;
 	}
