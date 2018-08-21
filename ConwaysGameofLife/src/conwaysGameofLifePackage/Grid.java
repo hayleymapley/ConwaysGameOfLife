@@ -28,12 +28,18 @@ public class Grid {
 //		return true;
 //	}
 
+//	public void updateAliveCells() {
+//		//get live cells and update each cell object. 
+//		
+//	}
 	
-	public void updateAliveCells() {
-		//get live cells and update each cell object. 
-		
-	}
-	
+	/**
+	 * Checks the provided x and y positions against all AliveCells in cellGroup to establish if these are already used
+	 * 
+	 * @param x - potential x position
+	 * @param y - potential y position
+	 * @return - true if not already occupied or false if occupied
+	 */
 	public boolean isCurrentPositionValid(int x, int y) {
 		for (Node c: this.getCellGroup().getChildren()) {
 			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
@@ -43,11 +49,15 @@ public class Grid {
 		return true;
 	}
 
-	public void drawCells() {
-		// draws cells into grid.
-		//includes color black/white
-	}
+//	public void drawCells() {
+//		// draws cells into grid.
+//		//includes color black/white
+//	}
 	
+	/**
+	 * Adds AliveCell to cellGroup and relocates it ti its internal x and y positions
+	 * @param cell - the cell to add to the cellGroup's collection
+	 */
 	public void addCell(AliveCell cell) {
 		cellGroup.getChildren().add(cell);
 		cell.relocate(cell.getxPos(), cell.getyPos());
@@ -57,6 +67,7 @@ public class Grid {
 //		return aliveCells;
 //	}
 
+	
 	public Group getCellGroup() {
 		return cellGroup;
 	}

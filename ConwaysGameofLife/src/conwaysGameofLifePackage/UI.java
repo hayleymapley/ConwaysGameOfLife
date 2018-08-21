@@ -1,14 +1,11 @@
 package conwaysGameofLifePackage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -184,12 +181,19 @@ public class UI extends Application{
 		 return 0;
 	}
 	
+	/**
+	 * removes any AliveCells in the condemned List from the main collection (cellGroup)
+	 */
 	public void removeAliveCells() {
 		for(AliveCell c : condemned) {
 			worldGrid.getCellGroup().getChildren().remove(c);
 		}
 	}
 	
+	/**
+	 * adds any cell with more than 3 or less than 2 neighbours into condemned ArrayList
+	 * resets this list first.
+	 */
 	public void addCondemned() {
 		condemned = new ArrayList<>();
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
