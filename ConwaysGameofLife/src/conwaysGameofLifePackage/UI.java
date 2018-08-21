@@ -59,6 +59,8 @@ public class UI extends Application{
 		KeyFrame frame = new KeyFrame(Duration.millis(16), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				//TODO check survival boolean
+				updateGrid();
 				//update cells - calling on grid
 				//draw cells - calling on grid which has hashmap
 			}
@@ -89,7 +91,8 @@ public class UI extends Application{
 		restart.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
+//				simulationPane.getChildren().removeAll(worldGrid.getCellGroup().getChildren());
+//				initialiseWorldGrid();
 			}
 		});
 		
@@ -151,6 +154,10 @@ public class UI extends Application{
 		//TODO: everything
 		//remove dead cells
 		//call update on alive cells
+		for(Node c : worldGrid.getCellGroup().getChildren()) {
+			AliveCell cell = (AliveCell) c;
+			cell.update(worldGrid);
+		}
 	}
 		
 	/**

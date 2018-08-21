@@ -28,20 +28,55 @@ public class Cell extends Rectangle {
 	public void update() { 
 
 	}
-	
-//	public int checkNeighbours() {
-//		// if alive w 2 or 3 neighbours, stays alive
-//		// if alive and > 3 neibours or < 2 neighbours, dies
-//		// if dead has exactly 3 neighbours, becomes alive (add to group)
-//		
-//		int neighbourCount = 0;
-//		
-//		if(this.getxPos() - size )
-//		
-//		
-//		return neighbourCount;
-//		
-//	}
+
+	public int checkNeighbours(Grid worldGrid) {
+		// if alive w 2 or 3 neighbours, stays alive
+		// if alive and > 3 neibours or < 2 neighbours, dies
+		// if dead has exactly 3 neighbours, becomes alive (add to group)
+
+		int neighbourCount = 0;
+
+		for(Node c : worldGrid.getCellGroup().getChildren()) {
+
+			AliveCell cell = (AliveCell) c;
+
+			// checks top left
+			if(this.getxPos() - size == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks top mid
+			if(this.getxPos() == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks top right
+			if(this.getxPos() + size == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks mid left
+			if(this.getxPos() - size == cell.getxPos() && this.getyPos() == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks mid right
+			if(this.getxPos() + size == cell.getxPos() && this.getyPos() == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks bottom left
+			if(this.getxPos() - size == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks bottom mid
+			if(this.getxPos() == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
+				neighbourCount++;
+			}
+			// checks bottom right
+			if(this.getxPos() + size == cell.getxPos() && this.getyPos() + size == cell.getyPos()) {
+				neighbourCount++;
+			}	
+		}
+		System.out.println(neighbourCount);
+
+		return neighbourCount;
+	}
 
 
 	// accessor methods
