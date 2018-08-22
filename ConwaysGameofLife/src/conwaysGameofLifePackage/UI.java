@@ -76,9 +76,9 @@ public class UI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				if (click % 2 == 0) {
-					timeline.play(); // on first press will pause
+					timeline.play(); 	// Every even press will play
 				} else {
-					timeline.pause(); // every second press will play
+					timeline.pause(); 	// Every odd press will pause
 				}
 				click++;
 			}
@@ -87,11 +87,14 @@ public class UI extends Application {
 		restart.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				// Clear all existing Cell objects in Grid
 				worldGrid.getCellGroup().getChildren().clear();
+				// Clear all TestCell objects in Grid
 				worldGrid.getCurrentTestCells().clear();
+				// Clear all Cell objects recently conceived
 				worldGrid.getNewlySpawnedCells().clear();
+				// Create the Grid, adding Cell objects within
 				initialiseWorldGrid();
-
 			}
 		});
 
@@ -104,7 +107,7 @@ public class UI extends Application {
 	}
 
 	/**
-	 * Sets attributes for buttons
+	 * Sets attributes for buttons and adds them to the controlBox (which sits in the controlPane)
 	 */
 	public void initialiseButtons() {
 		playPause.setText("Play/Pause");
@@ -114,27 +117,22 @@ public class UI extends Application {
 	}
 
 	/**
-	 * Method to set up initial state of the simulation
+	 * Sets up initial state of the simulation
 	 * <p>
-	 * creates grid, creates initial AliveCells, Initial Draw() of simulation
+	 * Creates grid and creates initial AliveCells
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
 		worldGrid.initialiseAliveCells(40);
-		animationPane.getChildren().add(worldGrid.getCellGroup()); // calls on HashMap in grid
-	}
-
-	public void generateInitialCells(int numOfCells) {
-		worldGrid.initialiseAliveCells(numOfCells);
+		animationPane.getChildren().add(worldGrid.getCellGroup());
 	}
 
 	/**
-	 * Initializes panes and pane nesting
+	 * Initializes panes and pane layout
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
 		controlPane.getChildren().add(controlBox);
-
 		scrollPane.setContent(animationPane);
 		parentPane.setTop(controlPane);
 		parentPane.setCenter(scrollPane);
