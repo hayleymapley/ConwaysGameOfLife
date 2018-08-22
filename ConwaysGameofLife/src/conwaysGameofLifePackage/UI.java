@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -24,6 +25,8 @@ public class UI extends Application {
 
 	private int startWidth = 600;
 	private int startHeight = 400;
+	private int xOffset = -3;
+	private int yOffset = -27;
 
 	private BorderPane parentPane = new BorderPane();
 	private ScrollPane scrollPane = new ScrollPane();  // TODO: make the scene pannable
@@ -71,6 +74,16 @@ public class UI extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
+		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				int newX = 0;
+				int newY = 0;
+				AliveCell cell = new AliveCell(newX, newY);
+				worldGrid.addCell(cell);
+			}	
+		});
+		
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
 			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
 			@Override

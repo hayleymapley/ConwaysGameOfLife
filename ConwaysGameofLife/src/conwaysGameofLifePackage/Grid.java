@@ -3,6 +3,8 @@ package conwaysGameofLifePackage;
 import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeType;
 
 public class Grid {
 
@@ -48,13 +50,11 @@ public class Grid {
 	}
 
 	/*
-	 * A method to set up the initial alive cells in a testing configuration TODO:
-	 * make this random or on click
+	 * A method to set up the initial alive cells in a testing configuration
 	 * 
 	 * @param numOfCells - the initial number of cells we want randomly placed in the world
 	 */
 	public void initialiseAliveCells(int numOfCells) {
-
 		for (int i = 0; i < numOfCells; i++) {
 			int potnX = generatePosition("x");
 			int potnY = generatePosition("y");
@@ -63,11 +63,11 @@ public class Grid {
 				potnX = generatePosition("x");
 				potnY = generatePosition("y");
 			}
-			AliveCell cell = new AliveCell(potnX, potnY); // TODO: make better way of initializing positions of cells at
-			// beginning of simulation (mouse click or random 'seed')
+			AliveCell cell = new AliveCell(potnX, potnY);
+			cell.setStrokeType(StrokeType.INSIDE);
+			cell.setStroke(Color.RED); // TODO: Needs to be inside the constructor?
 			addCell(cell); // adds the cell to the grid
 		}
-
 	}
 
 	/**
