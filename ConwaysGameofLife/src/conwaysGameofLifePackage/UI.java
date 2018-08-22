@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -25,17 +24,15 @@ public class UI extends Application {
 
 	private int startWidth = 600;
 	private int startHeight = 400;
-	private int xOffset = -3;
-	private int yOffset = -27;
 
 	private BorderPane parentPane = new BorderPane();
-	private ScrollPane scrollPane = new ScrollPane();  // TODO: make the scene pannable
+	private ScrollPane scrollPane = new ScrollPane();
 	private Pane animationPane = new Pane();
 	
 	private Grid worldGrid = new Grid();
 
 	private Pane controlPane = new Pane(); // controlPane - contains controlBox
-	private HBox controlBox = new HBox(); // controlBox - contains buttons
+	private HBox controlButtons = new HBox(); // controlBox - contains buttons
 	private Button playPause = new Button();
 	private Button restart = new Button();
 	private Button quit = new Button();
@@ -53,7 +50,7 @@ public class UI extends Application {
 		this.initialiseWorldGrid();
 		this.initialisePanes();
 
-		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
+		KeyFrame frame = new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				// Adds Cell objects which must die in the next generation to a 'hit' list
@@ -74,15 +71,15 @@ public class UI extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
-		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				int newX = 0;
-				int newY = 0;
-				AliveCell cell = new AliveCell(newX, newY);
-				worldGrid.addCell(cell);
-			}	
-		});
+//		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent event) {
+//				int newX = 0;
+//				int newY = 0;
+//				AliveCell cell = new AliveCell(newX, newY);
+//				worldGrid.addCell(cell);
+//			}	
+//		});
 		
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
 			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
@@ -126,7 +123,7 @@ public class UI extends Application {
 		playPause.setText("Play/Pause");
 		restart.setText("Restart");
 		quit.setText("Quit");
-		controlBox.getChildren().addAll(playPause, restart, quit);
+		controlButtons.getChildren().addAll(playPause, restart, quit);
 	}
 
 	/**
@@ -145,9 +142,9 @@ public class UI extends Application {
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
-		controlPane.getChildren().add(controlBox);
+		controlPane.getChildren().add(controlButtons);
 		scrollPane.setContent(animationPane);
-		parentPane.setTop(controlPane);
+		parentPane.setLeft(controlPane);
 		parentPane.setCenter(scrollPane);
 	}
 

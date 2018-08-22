@@ -3,23 +3,28 @@ package conwaysGameofLifePackage;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 public class Cell extends Rectangle {
 
 	//fields
 	private boolean isCellAlive;
-	private final static int size = 5;
+	private final static int size = 7;
 	private int xPos, yPos;
 	private int neighbourCount;
 
 	// default constructor
 	public Cell() {
-		super(size, size, Color.BLACK);
-
+		super(size, size, Color.LIGHTGRAY);
+		this.setStrokeType(StrokeType.INSIDE);
+		this.setStroke(Color.DARKGRAY);
 	}
+	
 	// overloaded Constructor
 	public Cell(int xPos, int yPos) {
-		super(size, size, Color.BLACK);
+		super(size, size, Color.LIGHTGRAY);
+		this.setStrokeType(StrokeType.INSIDE);
+		this.setStroke(Color.DARKGRAY);
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}

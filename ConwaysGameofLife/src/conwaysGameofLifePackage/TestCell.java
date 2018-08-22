@@ -1,11 +1,6 @@
 package conwaysGameofLifePackage;
 
-import javafx.scene.paint.Color;
-
 public class TestCell extends Cell {
-	
-	// fields
-	private boolean isActive;
 	
 	// default constructor
 	public TestCell() {

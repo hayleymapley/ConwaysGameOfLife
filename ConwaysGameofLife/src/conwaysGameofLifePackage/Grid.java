@@ -3,8 +3,6 @@ package conwaysGameofLifePackage;
 import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.StrokeType;
 
 public class Grid {
 
@@ -64,8 +62,6 @@ public class Grid {
 				potnY = generatePosition("y");
 			}
 			AliveCell cell = new AliveCell(potnX, potnY);
-			cell.setStrokeType(StrokeType.INSIDE);
-			cell.setStroke(Color.RED); // TODO: Needs to be inside the constructor?
 			addCell(cell); // adds the cell to the grid
 		}
 	}
@@ -117,10 +113,10 @@ public class Grid {
 		int row;
 		switch (pos) {
 		case "x":
-			col = (int) (Math.random() * 30 + 45); // gives random column number between 10 and 40
+			col = (int) (Math.random() * 30 + 25); // gives random column number between 10 and 40
 			return col * Cell.getSize();
 		case "y":
-			row = (int) (Math.random() * 30 + 25); // gives random row number between 10 and 40
+			row = (int) (Math.random() * 30 + 10); // gives random row number between 10 and 40
 			return row * Cell.getSize();
 		}
 		return 0;

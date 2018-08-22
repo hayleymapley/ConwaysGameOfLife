@@ -1,7 +1,6 @@
 package conwaysGameofLifePackage;
 
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 public class AliveCell extends Cell {
 
