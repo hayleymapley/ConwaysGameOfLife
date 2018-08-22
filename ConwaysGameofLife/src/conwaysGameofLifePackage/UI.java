@@ -93,8 +93,9 @@ public class UI extends Application{
 		restart.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-//				simulationPane.getChildren().removeAll(worldGrid.getCellGroup().getChildren());
-//				initialiseWorldGrid();
+				worldGrid.getCellGroup().getChildren().clear();
+				worldGrid.getCurrentTestCells().clear();
+				worldGrid.getNewlySpawnedCells().clear();
 			}
 		});
 		
