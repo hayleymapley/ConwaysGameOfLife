@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -40,7 +41,14 @@ public class UI extends Application {
 	private Grid worldGrid = new Grid();
 
 	private GridPane controlPane = new GridPane(); // controlPane - contains controlBox and other elements
-	Text title = new Text();
+	private Text title = new Text();
+	
+	private VBox countsBox = new VBox();
+	private Text generationLabel = new Text();
+	private Text generationCount = new Text();
+	private Text cellLabel = new Text();
+	private Text cellCount = new Text();
+	
 	private HBox controlButtons = new HBox(); // controlBox - contains buttons
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -57,6 +65,8 @@ public class UI extends Application {
 	private ImageView quitView = new ImageView(imgQuit);
 	private Image imgReset = new Image("/reset3.png");		// Reset button image
 	private ImageView restartView = new ImageView(imgReset);
+	
+	private int count;
 
 	/**
 	 * Main entry point for the application
@@ -74,6 +84,9 @@ public class UI extends Application {
 		KeyFrame frame = new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				count++;
+				generationCount.setText(Integer.toString(count));
+				cellCount.setText(Integer.toString(worldGrid.getCellGroup().getChildren().size()));
 				// Adds Cell objects which must die in the next generation to a 'hit' list
 				worldGrid.addCondemned();		
 				// Removes the Cell objects which are in the 'hit' list from the cellGroup
@@ -195,13 +208,28 @@ public class UI extends Application {
 		title.setText("GAME OF LIFE");
 		title.setFont(Font.font(30));
 		
+		generationLabel.setText("\nGENERATION");
+		generationLabel.setFont(Font.font(15));
+		generationCount.setText("0");
+		generationCount.setFont(Font.font(30));
+		cellLabel.setText("\nCELLS");
+		cellLabel.setFont(Font.font(15));
+		cellCount.setText("300");
+		cellCount.setFont(Font.font(30));
+		countsBox.getChildren().addAll(generationLabel, generationCount, cellLabel, cellCount);
+		countsBox.setAlignment(Pos.CENTER);
+		
 		controlPane.setPadding(new Insets(25, 25, 25, 25));
 		controlPane.setVgap(20);
 		controlPane.add(title, 0, 0);
 		controlPane.add(controlButtons, 0, 1);
+		controlPane.add(countsBox, 0, 2);
+		
+		
 		title.setTextAlignment(TextAlignment.CENTER);
 		controlButtons.setAlignment(Pos.CENTER);
-
+		generationLabel.setTextAlignment(TextAlignment.CENTER);
+		generationCount.setTextAlignment(TextAlignment.CENTER);
 
 		scrollPane.setContent(animationPane);
 
