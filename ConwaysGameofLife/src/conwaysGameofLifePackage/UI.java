@@ -11,6 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -65,6 +70,10 @@ public class UI extends Application {
 	private ImageView quitView = new ImageView(imgQuit);
 	private Image imgReset = new Image("/reset3.png");		// Reset button image
 	private ImageView restartView = new ImageView(imgReset);
+	
+	private BackgroundImage geometric = new BackgroundImage(new Image("/bluegeometric.jpg"),
+			BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+			BackgroundSize.DEFAULT);
 	
 	private int count;
 
@@ -219,12 +228,12 @@ public class UI extends Application {
 		countsBox.getChildren().addAll(generationLabel, generationCount, cellLabel, cellCount);
 		countsBox.setAlignment(Pos.CENTER);
 		
+		controlPane.setBackground(new Background(geometric));
 		controlPane.setPadding(new Insets(25, 25, 25, 25));
 		controlPane.setVgap(20);
 		controlPane.add(title, 0, 0);
 		controlPane.add(controlButtons, 0, 1);
 		controlPane.add(countsBox, 0, 2);
-		
 		
 		title.setTextAlignment(TextAlignment.CENTER);
 		controlButtons.setAlignment(Pos.CENTER);

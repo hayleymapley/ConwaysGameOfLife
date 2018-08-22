@@ -15,16 +15,16 @@ public class Cell extends Rectangle {
 
 	// default constructor
 	public Cell() {
-		super(size, size, Color.LIGHTGRAY);
+		super(size, size, Color.LIGHTBLUE);
 		this.setStrokeType(StrokeType.INSIDE);
-		this.setStroke(Color.DARKGRAY);
+		this.setStroke(Color.CORNFLOWERBLUE);
 	}
 	
 	// overloaded Constructor
 	public Cell(int xPos, int yPos) {
-		super(size, size, Color.LIGHTGRAY);
+		super(size, size, Color.LIGHTBLUE);
 		this.setStrokeType(StrokeType.INSIDE);
-		this.setStroke(Color.DARKGRAY);
+		this.setStroke(Color.CORNFLOWERBLUE);
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
