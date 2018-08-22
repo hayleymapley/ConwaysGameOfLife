@@ -96,6 +96,8 @@ public class UI extends Application{
 				worldGrid.getCellGroup().getChildren().clear();
 				worldGrid.getCurrentTestCells().clear();
 				worldGrid.getNewlySpawnedCells().clear();
+				initialiseWorldGrid();
+				
 			}
 		});
 		
