@@ -12,18 +12,17 @@ public class Cell extends Rectangle {
 	private int xPos, yPos;
 	private int neighbourCount;
 
-	// constructors
+	// default constructor
 	public Cell() {
 		super(size, size, Color.BLACK);
 
 	}
-
+	// overloaded Constructor
 	public Cell(int xPos, int yPos) {
 		super(size, size, Color.BLACK);
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
-
 
 	//methods
 	public void update() { 
