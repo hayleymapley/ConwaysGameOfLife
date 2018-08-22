@@ -1,5 +1,6 @@
 package conwaysGameofLifePackage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ public class Grid {
 //	private Map<Position, AliveCell> aliveCells = new HashMap<>();
 	
 	private Group cellGroup = new Group();
+	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>();
+	private ArrayList<TestCell> currentTestCells = new ArrayList<>();
 
 	public Grid() {
 		
@@ -59,8 +62,17 @@ public class Grid {
 	 * @param cell - the cell to add to the cellGroup's collection
 	 */
 	public void addCell(AliveCell cell) {
+		System.out.println("called addcell");
 		cellGroup.getChildren().add(cell);
 		cell.relocate(cell.getxPos(), cell.getyPos());
+	}
+	
+	public boolean isTestCellEmpty(int x, int y) {
+		for(TestCell c: currentTestCells) {
+			if(x == c.getxPos() && y == c.getyPos())
+				return false;
+		}
+		return true;
 	}
 	
 //	public Map<Position, AliveCell> getAliveCells() {
@@ -75,6 +87,17 @@ public class Grid {
 	public void setCellGroup(Group cellGroup) {
 		this.cellGroup = cellGroup;
 	}
+
+	public ArrayList<AliveCell> getNewlySpawnedCells() {
+		return newlySpawnedCells;
+	}
+
+	public ArrayList<TestCell> getCurrentTestCells() {
+		return currentTestCells;
+	}
+
+
+
 
 //	public void setAliveCells(Map<Position, AliveCell> aliveCells) {
 //		this.aliveCells = aliveCells;

@@ -59,6 +59,7 @@ public class UI extends Application{
 			@Override
 			public void handle(ActionEvent event) {
 				//TODO check survival boolean
+				System.out.println("------------------------------");
 				addCondemned();
 				removeAliveCells();
 				updateGrid();
@@ -121,9 +122,16 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
-		for (int i = 0; i<40; i++) {
+		for (int i = 0; i<20; i++) {
 			initialiseAliveCells(worldGrid);
 		}
+//		AliveCell c1 = new AliveCell(10, 10);
+//		AliveCell c2 = new AliveCell(10, 15);
+//		AliveCell c3 = new AliveCell(10, 20);
+//		worldGrid.addCell(c1);
+//		worldGrid.addCell(c2);
+//		worldGrid.addCell(c3);
+		
 		simulationPane.getChildren().add(worldGrid.getCellGroup()); 			// calls on HashMap in grid
 	}
 	
@@ -155,10 +163,22 @@ public class UI extends Application{
 		//TODO: everything
 		//remove dead cells
 		//call update on alive cells
+		System.out.println("called updategrid");
+		for (AliveCell c: worldGrid.getNewlySpawnedCells()) {
+			worldGrid.addCell(c);
+		}
+		worldGrid.getNewlySpawnedCells().clear();  //now clear for use with next update
+		System.out.println(worldGrid.getNewlySpawnedCells() + " this should be empty");
+		worldGrid.getCurrentTestCells().clear();
+		System.out.println(worldGrid.getCurrentTestCells() + " this should be empty");
+		
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
 			AliveCell cell = (AliveCell) c;
 			cell.update(worldGrid);
+			System.out.println("update cell called");
 		}
+		//add newly spawned AliveCells to group
+		
 	}
 		
 	/**
@@ -172,10 +192,10 @@ public class UI extends Application{
 		int row;
 		 switch (pos) {
 		 case "x" :
-			 col = (int)(Math.random()*10);	//gives random column number between 0 and 20
+			 col = (int)(Math.random()*5 +40);	//gives random column number between 0 and 20
 			 return col*Cell.getSize();
 		 case "y" :
-			 row = (int)(Math.random()*10);	//gives random row number between 0 and 20
+			 row = (int)(Math.random()*5 + 40);	//gives random row number between 0 and 20
 			 return row*Cell.getSize();
 		 }
 		 return 0;
@@ -185,6 +205,7 @@ public class UI extends Application{
 	 * removes any AliveCells in the condemned List from the main collection (cellGroup)
 	 */
 	public void removeAliveCells() {
+		System.out.println("called remove alive cells");
 		for(AliveCell c : condemned) {
 			worldGrid.getCellGroup().getChildren().remove(c);
 		}
@@ -195,15 +216,16 @@ public class UI extends Application{
 	 * resets this list first.
 	 */
 	public void addCondemned() {
+		System.out.println("called addCondemned");
 		condemned = new ArrayList<>();
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
 			AliveCell cell = (AliveCell) c;
 			if(!cell.isCellAlive()) {
-				System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count = " + cell.getNeighbourCount());
+//				System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count = " + cell.getNeighbourCount());
 				condemned.add((AliveCell) c);
 			}
 		}
-		System.out.println("Condemned size =" + condemned.size());
+//		System.out.println("Condemned size =" + condemned.size());
 	}
 	
 //	public void removeAliveCells() {
@@ -243,3 +265,4 @@ public class UI extends Application{
 	}
 
 }
+
