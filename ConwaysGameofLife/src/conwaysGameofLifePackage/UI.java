@@ -36,8 +36,7 @@ public class UI extends Application {
 	private Pane controlPane = new Pane(); // control pane (for adding buttons)
 	private HBox controlBox = new HBox(); // for containing buttons
 	private Grid worldGrid = new Grid();
-	private ArrayList<AliveCell> condemned = new ArrayList<>(); // holds alive cells that will die next turn (returned
-	// false for isAlive)
+	
 
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -60,9 +59,9 @@ public class UI extends Application {
 			public void handle(ActionEvent event) {
 				// TODO check survival boolean
 				System.out.println("------------------------------");
-				addCondemned();
-				removeAliveCells();
-				updateGrid();
+				worldGrid.addCondemned();
+				worldGrid.removeAliveCells();
+				worldGrid.updateGrid();
 				// update cells - calling on grid
 				// draw cells - calling on grid which has hashmap
 			}
@@ -135,62 +134,11 @@ public class UI extends Application {
 		worldGrid.initialiseAliveCells(numOfCells);
 	}
 
-	/**
-	 * Method to update all AliveCells in the Grids Collection
-	 * <p>
-	 * first will remove all dead cells second will call update on all remaining
-	 * cells
-	 */
-	public void updateGrid() {
-		// TODO: everything
-		// remove dead cells
-		// call update on alive cells
-		System.out.println("called updategrid");
-		for (AliveCell c : worldGrid.getNewlySpawnedCells()) {
-			worldGrid.addCell(c);
-		}
-		worldGrid.getNewlySpawnedCells().clear(); // now clear for use with next update
-		System.out.println(worldGrid.getNewlySpawnedCells() + " this should be empty");
-		worldGrid.getCurrentTestCells().clear();
-		System.out.println(worldGrid.getCurrentTestCells() + " this should be empty");
+	
 
-		for (Node c : worldGrid.getCellGroup().getChildren()) {
-			AliveCell cell = (AliveCell) c;
-			cell.update(worldGrid);
-			System.out.println("update cell called");
-		}
-		// add newly spawned AliveCells to group
+	
 
-	}
-
-	/**
-	 * removes any AliveCells in the condemned List from the main collection
-	 * (cellGroup)
-	 */
-	public void removeAliveCells() {
-		System.out.println("called remove alive cells");
-		for (AliveCell c : condemned) {
-			worldGrid.getCellGroup().getChildren().remove(c);
-		}
-	}
-
-	/**
-	 * adds any cell with more than 3 or less than 2 neighbours into condemned
-	 * ArrayList resets this list first.
-	 */
-	public void addCondemned() {
-		System.out.println("called addCondemned");
-		condemned = new ArrayList<>();
-		for (Node c : worldGrid.getCellGroup().getChildren()) {
-			AliveCell cell = (AliveCell) c;
-			if (!cell.isCellAlive()) {
-				// System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count
-				// = " + cell.getNeighbourCount());
-				condemned.add((AliveCell) c);
-			}
-		}
-		// System.out.println("Condemned size =" + condemned.size());
-	}
+	
 
 	// public void removeAliveCells() {
 	// int size = worldGrid.getCellGroup().getChildren().size();

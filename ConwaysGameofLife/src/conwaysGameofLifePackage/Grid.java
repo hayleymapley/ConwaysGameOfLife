@@ -12,6 +12,8 @@ public class Grid {
 	private Group cellGroup = new Group();
 	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>();
 	private ArrayList<TestCell> currentTestCells = new ArrayList<>();
+	private ArrayList<AliveCell> condemned = new ArrayList<>(); // holds alive cells that will die next turn (returned
+	// false for isAlive)
 
 	public Grid() {
 
@@ -36,6 +38,17 @@ public class Grid {
 		return true;
 	}
 
+	/**
+	 * removes any AliveCells in the condemned List from the main collection
+	 * (cellGroup)
+	 */
+	public void removeAliveCells() {
+		System.out.println("called remove alive cells");
+		for (AliveCell c : getCondemned()) {
+			getCellGroup().getChildren().remove(c);
+		}
+	}
+
 	/*
 	 * A method to set up the initial alive cells in a testing configuration TODO:
 	 * make this random or on click
@@ -56,6 +69,52 @@ public class Grid {
 			// beginning of simulation (mouse click or random 'seed')
 			addCell(cell); // adds the cell to the grid
 		}
+
+	}
+
+	/**
+	 * adds any cell with more than 3 or less than 2 neighbours into condemned
+	 * ArrayList resets this list first.
+	 */
+	public void addCondemned() {
+		System.out.println("called addCondemned");
+		condemned = new ArrayList<>();
+		for (Node c : getCellGroup().getChildren()) {
+			AliveCell cell = (AliveCell) c;
+			if (!cell.isCellAlive()) {
+				// System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count
+				// = " + cell.getNeighbourCount());
+				condemned.add((AliveCell) c);
+			}
+		}
+		// System.out.println("Condemned size =" + condemned.size());
+	}
+
+	/**
+	 * Method to update all AliveCells in the Grids Collection
+	 * <p>
+	 * first will remove all dead cells second will call update on all remaining
+	 * cells
+	 */
+	public void updateGrid() {
+		// TODO: everything
+		// remove dead cells
+		// call update on alive cells
+		System.out.println("called updategrid");
+		for (AliveCell c : getNewlySpawnedCells()) {
+			addCell(c);
+		}
+		getNewlySpawnedCells().clear(); // now clear for use with next update
+		System.out.println(getNewlySpawnedCells() + " this should be empty");
+		getCurrentTestCells().clear();
+		System.out.println(getCurrentTestCells() + " this should be empty");
+
+		for (Node c : getCellGroup().getChildren()) {
+			AliveCell cell = (AliveCell) c;
+			cell.update(this);
+			System.out.println("update cell called");
+		}
+		// add newly spawned AliveCells to group
 
 	}
 
@@ -115,5 +174,13 @@ public class Grid {
 
 	public ArrayList<TestCell> getCurrentTestCells() {
 		return currentTestCells;
+	}
+
+	public ArrayList<AliveCell> getCondemned() {
+		return condemned;
+	}
+
+	public void setCondemned(ArrayList<AliveCell> condemned) {
+		this.condemned = condemned;
 	}
 }
