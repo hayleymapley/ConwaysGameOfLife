@@ -55,7 +55,7 @@ public class UI extends Application{
 		initialiseWorldGrid();
 		initialisePanes();
 		
-		KeyFrame frame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				//TODO check survival boolean
@@ -122,7 +122,7 @@ public class UI extends Application{
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<40; i++) {
 			initialiseAliveCells(worldGrid);
 		}
 //		AliveCell c1 = new AliveCell(10, 10);
@@ -192,10 +192,10 @@ public class UI extends Application{
 		int row;
 		 switch (pos) {
 		 case "x" :
-			 col = (int)(Math.random()*5 +40);	//gives random column number between 0 and 20
+			 col = (int)(Math.random()*10 +40);	//gives random column number between 0 and 20
 			 return col*Cell.getSize();
 		 case "y" :
-			 row = (int)(Math.random()*5 + 40);	//gives random row number between 0 and 20
+			 row = (int)(Math.random()*10 + 40);	//gives random row number between 0 and 20
 			 return row*Cell.getSize();
 		 }
 		 return 0;
