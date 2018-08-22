@@ -19,6 +19,8 @@ public class TestCell extends Cell {
 		setyPos(y);
 	}
 	
+	// methods
+	
 	/**
 	 * Update method for test cells. 
 	 * Calls method that creates new alive cells from test cells

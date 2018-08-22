@@ -28,12 +28,16 @@ public class Cell extends Rectangle {
 	public void update() { 
 
 	}
-
+	
+	/**
+	 * Checks for an AliveCell's neighbours at all possible positions, 
+	 * increasing count whenever a neighbour is found.
+	 * 
+	 * @param worldGrid - passes in the Grid object
+	 * @return - returns the number of neighbours a cell has
+	 */
 	public int checkNeighbours(Grid worldGrid) {
-		// if alive w 2 or 3 neighbours, stays alive
-		// if alive and > 3 neibours or < 2 neighbours, dies
-		// if dead has exactly 3 neighbours, becomes alive (add to group)
-
+		
 		int count = 0;
 
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
@@ -73,7 +77,6 @@ public class Cell extends Rectangle {
 				count++;
 			}	
 		}
-		//System.out.println(this.getxPos() + " " + this.getyPos() + " count = " + count);
 		this.neighbourCount = count;
 		return neighbourCount;
 	}

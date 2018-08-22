@@ -16,36 +16,52 @@ public class AliveCell extends Cell {
 		super(x, y);
 		this.setCellAlive(true);
 	}
-
+	
+	// methods
+	
+	/**
+	 * AliveCells update method.
+	 * 
+	 * Calls the method that decides if a cell survives to the next round.
+	 * Calls method that spawns test cells in all empty neighbour spaces around AliveCell
+	 * 
+	 * @param worldGrid - passes in Grid object
+	 */
 	public void update(Grid worldGrid) {
-		System.out.println("called update method of AliveCell");
-		// check whether cell survives next round
 		this.willSurvive(worldGrid);
-		// generate dead cells in unoccupied neighbours (call spawn deadcells method)
 		spawnDeadCells(worldGrid);
-
 	}
-
+	
+	/**
+	 * Method determines whether an AliveCell has the correct number
+	 * of neighbours to survive to the next round. Finds number of 
+	 * neighbours a cell has by calling the checkNeighbours method,
+	 * then sets appropriate return value of setCellAlive method.
+	 * 
+	 * @param worldGrid - passes in Grid object
+	 */
 	public void willSurvive(Grid worldGrid) {
-		System.out.println("called willSurve");
 		int neighbours = checkNeighbours(worldGrid);
 
 		if (neighbours == 2 || neighbours == 3) {
-			// return true;
 			this.setCellAlive(true);
-			System.out.println("neighbours " + neighbours);
 		}
-		// return false;
 		else {
 			this.setCellAlive(false);
 		}
 	}
+	
+	/**
+	 * Creates a boolean set to true representing each neighbouring position of an AliveCell.
+	 * Checks to see if there is already a cell in each position - if so changes boolean to false.
+	 * Any positions remaining true will spawn a test cell.
+	 * 
+	 * @param worldGrid - passes in Grid object
+	 */
 
 	public void spawnDeadCells(Grid worldGrid) {
-		// creates cells if condition from checkNeighBors() are met.
-		System.out.println("spawnDeadCells called, testing cell at x:" + getxPos() + " y:" + getyPos());
 
-		boolean tl = true; // true means no occupation so can draw
+		boolean tl = true;
 		boolean tm = true;
 		boolean tr = true;
 		boolean ml = true;
@@ -57,9 +73,7 @@ public class AliveCell extends Cell {
 		for (Node c : worldGrid.getCellGroup().getChildren()) {
 
 			AliveCell cell = (AliveCell) c;
-
-			// If current check has same position as position checked then return false (not
-			// a valid place to spawn
+			
 			// checks top left
 			if (this.getxPos() - getSize() == cell.getxPos() && this.getyPos() - getSize() == cell.getyPos()) {
 				tl = false;
@@ -93,86 +107,72 @@ public class AliveCell extends Cell {
 				br = false;
 			}
 		}
-		// Now check if each position, is valid for spawning (ie not occupied)
-		if (tl == true) { // can draw alive cell here
+		
+		// After initial true/false checks, any positions remaining true will spawn a test cell.
+		
+		if (tl == true) { // checks top left
 			if (worldGrid.isTestCellEmpty(this.getxPos() - getSize(), this.getyPos() - getSize())) {
-				TestCell topLeft = new TestCell(this.getxPos() - getSize(), this.getyPos() - getSize()); // new dead
-				// cell at
-				// coordinates
-				// checked
+				TestCell topLeft = new TestCell(this.getxPos() - getSize(), this.getyPos() - getSize());
 				worldGrid.getCurrentTestCells().add(topLeft);
-				System.out.println("created cell at top left");
 
 				topLeft.update(worldGrid);
 			}
 		}
-		if (tm == true) {
+		if (tm == true) { // checks top mid
 			if (worldGrid.isTestCellEmpty(this.getxPos(), this.getyPos() - getSize())) {
 				TestCell topMid = new TestCell(this.getxPos(), this.getyPos() - getSize());
 				worldGrid.getCurrentTestCells().add(topMid);
-				System.out.println("created cell at top mid");
 
 				topMid.update(worldGrid);
 			}
 		}
-		if (tr == true) {
+		if (tr == true) { // checks top right
 			if (worldGrid.isTestCellEmpty(this.getxPos() + getSize(), this.getyPos() - getSize())) {
 				TestCell topRight = new TestCell(this.getxPos() + getSize(), this.getyPos() - getSize());
 				worldGrid.getCurrentTestCells().add(topRight);
-				System.out.println("created cell at top right");
 
 				topRight.update(worldGrid);
 			}
 		}
-		if (ml == true) {
+		if (ml == true) { // checks mid left
 			if (worldGrid.isTestCellEmpty(this.getxPos() - getSize(), this.getyPos())) {
 				TestCell midLeft = new TestCell(this.getxPos() - getSize(), this.getyPos());
 				worldGrid.getCurrentTestCells().add(midLeft);
-				System.out.println("created cell at mid left");
 
 				midLeft.update(worldGrid);
 			}
-
 		}
-		if (mr == true) {
+		if (mr == true) { // checks mid right
 			if (worldGrid.isTestCellEmpty(this.getxPos() + getSize(), this.getyPos())) {
 				TestCell midRight = new TestCell(this.getxPos() + getSize(), this.getyPos());
 				worldGrid.getCurrentTestCells().add(midRight);
-				System.out.println("created cell at mid right");
 				midRight.update(worldGrid);
 			}
-
 		}
-		if (bl == true) {
+		if (bl == true) { // checks bottom left
 			if (worldGrid.isTestCellEmpty(this.getxPos() - getSize(), this.getyPos() + getSize())) {
 				TestCell bottomLeft = new TestCell(this.getxPos() - getSize(), this.getyPos() + getSize());
 				worldGrid.getCurrentTestCells().add(bottomLeft);
-				System.out.println("created cell at bottom left");
 
 				bottomLeft.update(worldGrid);
 			}
-
 		}
-		if (bm == true) {
+		if (bm == true) { // checks bottom mid
 			if (worldGrid.isTestCellEmpty(this.getxPos(), this.getyPos() + getSize())) {
 				TestCell bottomMid = new TestCell(this.getxPos(), this.getyPos() + getSize());
 				worldGrid.getCurrentTestCells().add(bottomMid);
-				System.out.println("created cell at bottom mid");
 
 				bottomMid.update(worldGrid);
 			}
-
 		}
-		if (br == true) {
+		if (br == true) { // checks bottom right
 			if (worldGrid.isTestCellEmpty(this.getxPos() + getSize(), this.getyPos() + getSize())) {
 				TestCell bottomRight = new TestCell(this.getxPos() + getSize(), this.getyPos() + getSize());
 				worldGrid.getCurrentTestCells().add(bottomRight);
-				System.out.println("created cell at bottom right");
 
 				bottomRight.update(worldGrid);
 			}
 		}
-
 	}
 
 }
