@@ -5,11 +5,19 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
@@ -28,14 +36,27 @@ public class UI extends Application {
 	private BorderPane parentPane = new BorderPane();
 	private ScrollPane scrollPane = new ScrollPane();
 	private Pane animationPane = new Pane();
-	
+
 	private Grid worldGrid = new Grid();
 
-	private Pane controlPane = new Pane(); // controlPane - contains controlBox
+	private GridPane controlPane = new GridPane(); // controlPane - contains controlBox and other elements
+	Text title = new Text();
 	private HBox controlButtons = new HBox(); // controlBox - contains buttons
 	private Button playPause = new Button();
 	private Button restart = new Button();
 	private Button quit = new Button();
+
+	private Image imgPlayPause = new Image("/play-pause.png");		//Play/pause button images (has three states)
+	private ImageView playPauseView = new ImageView(imgPlayPause);
+	private Image imgPlay = new Image("/play.png");
+	private ImageView playView = new ImageView(imgPlay);
+	private Image imgPause = new Image("/pause.png");
+	private ImageView pauseView = new ImageView(imgPause);
+
+	private Image imgQuit = new Image(getClass().getResourceAsStream("exit (1).png")); // Quit button image
+	private ImageView quitView = new ImageView(imgQuit);
+	private Image imgReset = new Image("/reset3.png");		// Reset button image
+	private ImageView restartView = new ImageView(imgReset);
 
 	/**
 	 * Main entry point for the application
@@ -63,7 +84,7 @@ public class UI extends Application {
 		});
 
 		Scene mainScene = new Scene(parentPane, startWidth, startHeight);
-		
+
 		Timeline timeline = new Timeline(frame);
 		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
 
@@ -71,24 +92,26 @@ public class UI extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
-//		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(MouseEvent event) {
-//				int newX = 0;
-//				int newY = 0;
-//				AliveCell cell = new AliveCell(newX, newY);
-//				worldGrid.addCell(cell);
-//			}	
-//		});
-		
+		//		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		//			@Override
+		//			public void handle(MouseEvent event) {
+		//				int newX = 0;
+		//				int newY = 0;
+		//				AliveCell cell = new AliveCell(newX, newY);
+		//				worldGrid.addCell(cell);
+		//			}	
+		//		});
+
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
 			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
 			@Override
 			public void handle(ActionEvent event) {
 				if (click % 2 == 0) {
 					timeline.play(); 	// Every even press will play
+					playPause.setGraphic(pauseView);
 				} else {
 					timeline.pause(); 	// Every odd press will pause
+					playPause.setGraphic(playView);
 				}
 				click++;
 			}
@@ -120,9 +143,36 @@ public class UI extends Application {
 	 * Sets attributes for buttons and adds them to the controlBox (which sits in the controlPane)
 	 */
 	public void initialiseButtons() {
-		playPause.setText("Play/Pause");
-		restart.setText("Restart");
-		quit.setText("Quit");
+		playPause.setText("");
+		restart.setText("");
+		quit.setText("");
+		// Play/pause button
+		// Set image widths and heights (play/pause button has three states/images)
+		playPauseView.setFitWidth(20);
+		playPauseView.setFitHeight(20);
+		playView.setFitWidth(20);
+		playView.setFitHeight(20);
+		pauseView.setFitWidth(20);
+		pauseView.setFitHeight(20);
+		// Set style and image of play button
+		playPause.setStyle("-fx-background-color: #ffffff; -fx-border-color: #000000");
+		playPause.setGraphic(playPauseView);
+
+		// Quit button
+		// Set image width, height
+		quitView.setFitWidth(20);
+		quitView.setFitHeight(20);
+		// Set style and image of quit button
+		quit.setStyle("-fx-background-color: #ffffff;-fx-border-color: #000000");
+		quit.setGraphic(quitView);
+
+		// Reset button
+		restartView.setFitWidth(20);
+		restartView.setFitHeight(20);
+		// Set style and image of reset button
+		restart.setStyle("-fx-background-color: #ffffff;-fx-border-color: #000000");
+		restart.setGraphic(restartView);
+		
 		controlButtons.getChildren().addAll(playPause, restart, quit);
 	}
 
@@ -142,8 +192,19 @@ public class UI extends Application {
 	 */
 	public void initialisePanes() {
 		initialiseButtons();
-		controlPane.getChildren().add(controlButtons);
+		title.setText("GAME OF LIFE");
+		title.setFont(Font.font(30));
+		
+		controlPane.setPadding(new Insets(25, 25, 25, 25));
+		controlPane.setVgap(20);
+		controlPane.add(title, 0, 0);
+		controlPane.add(controlButtons, 0, 1);
+		title.setTextAlignment(TextAlignment.CENTER);
+		controlButtons.setAlignment(Pos.CENTER);
+
+
 		scrollPane.setContent(animationPane);
+
 		parentPane.setLeft(controlPane);
 		parentPane.setCenter(scrollPane);
 	}

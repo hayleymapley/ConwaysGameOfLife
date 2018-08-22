@@ -113,7 +113,7 @@ public class Grid {
 		int row;
 		switch (pos) {
 		case "x":
-			col = (int) (Math.random() * 30 + 25); // gives random column number between 10 and 40
+			col = (int) (Math.random() * 30 + 15); // gives random column number between 10 and 40
 			return col * Cell.getSize();
 		case "y":
 			row = (int) (Math.random() * 30 + 10); // gives random row number between 10 and 40
