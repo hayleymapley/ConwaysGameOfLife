@@ -1,9 +1,6 @@
 package conwaysGameofLifePackage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.scene.Group;
 import javafx.scene.Node;
 
@@ -11,8 +8,8 @@ public class Grid {
 
 	// Grid fields
 	private Group cellGroup = new Group();								// parent group that holds all cell objects
-	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>(); // holds test cells that have become alive that turn
-	private ArrayList<TestCell> currentTestCells = new ArrayList<>(); // holds temporary cells in an AliveCell's neibourhood
+	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>(); // holds test cells that have become alive that generation
+	private ArrayList<TestCell> currentTestCells = new ArrayList<>(); // holds temporary cells in an AliveCell's neighbourhood
 	private ArrayList<AliveCell> condemned = new ArrayList<>(); // holds alive cells that will die next turn (returned false for isAlive)
 
 	// default Grid constructor
@@ -109,7 +106,7 @@ public class Grid {
 
 	/**
 	 * Generates a random x & y coordinate for an Alive cell, 
-	 * used for initialising simulation
+	 * used for initializing simulation
 	 * 
 	 * @return - returns either (column * cell size) for x, 
 	 * 			or (row * cell size) for y.
@@ -120,10 +117,10 @@ public class Grid {
 		int row;
 		switch (pos) {
 		case "x":
-			col = (int) (Math.random() * 10 + 40); // gives random column number between 10 and 40
+			col = (int) (Math.random() * 30 + 45); // gives random column number between 10 and 40
 			return col * Cell.getSize();
 		case "y":
-			row = (int) (Math.random() * 10 + 40); // gives random row number between 10 and 40
+			row = (int) (Math.random() * 30 + 25); // gives random row number between 10 and 40
 			return row * Cell.getSize();
 		}
 		return 0;

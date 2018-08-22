@@ -15,7 +15,7 @@ import javafx.util.Duration;
 import javafx.scene.Scene;
 
 /**
- * This class handles animation and the initialisation of the Grid object.
+ * This class handles animation and the initialization of the Grid object.
  * 
  * @author TeamFriendshipNumber3
  *
@@ -123,7 +123,7 @@ public class UI extends Application {
 	 */
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
-		worldGrid.initialiseAliveCells(40);
+		worldGrid.initialiseAliveCells(300);
 		animationPane.getChildren().add(worldGrid.getCellGroup());
 	}
 
