@@ -114,15 +114,7 @@ public class UI extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
-		//		scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-		//			@Override
-		//			public void handle(MouseEvent event) {
-		//				int newX = 0;
-		//				int newY = 0;
-		//				AliveCell cell = new AliveCell(newX, newY);
-		//				worldGrid.addCell(cell);
-		//			}	
-		//		});
+//		scrollPane.setOnMousePressed(value);
 
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
 			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
@@ -240,8 +232,11 @@ public class UI extends Application {
 		generationLabel.setTextAlignment(TextAlignment.CENTER);
 		generationCount.setTextAlignment(TextAlignment.CENTER);
 
+		scrollPane.setPannable(true);
 		scrollPane.setContent(animationPane);
-
+		scrollPane.setHvalue(scrollPane.getHmin() + (scrollPane.getHmax() - scrollPane.getHmin()) / 2);
+		scrollPane.setHvalue(scrollPane.getVmin() + (scrollPane.getVmax() - scrollPane.getVmin()) / 2);
+		
 		parentPane.setLeft(controlPane);
 		parentPane.setCenter(scrollPane);
 	}
