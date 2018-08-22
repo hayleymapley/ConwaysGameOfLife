@@ -9,30 +9,32 @@ import javafx.scene.Node;
 
 public class Grid {
 
-	private Group cellGroup = new Group();
-	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>();
-	private ArrayList<TestCell> currentTestCells = new ArrayList<>();
-	private ArrayList<AliveCell> condemned = new ArrayList<>(); // holds alive cells that will die next turn (returned
-	// false for isAlive)
+	// Grid fields
+	private Group cellGroup = new Group();								// parent group that holds all cell objects
+	private ArrayList<AliveCell> newlySpawnedCells = new ArrayList<>(); // holds test cells that have become alive that turn
+	private ArrayList<TestCell> currentTestCells = new ArrayList<>(); // holds temporary cells in an AliveCell's neibourhood
+	private ArrayList<AliveCell> condemned = new ArrayList<>(); // holds alive cells that will die next turn (returned false for isAlive)
 
+	// default Grid constructor
 	public Grid() {
 
 	}
 
 	/**
 	 * Checks the provided x and y positions against all AliveCells in cellGroup to
-	 * establish if these are already used
+	 * establish if these are already used by another cell
 	 * 
-	 * @param x
-	 *            - potential x position
-	 * @param y
-	 *            - potential y position
+	 * @param x - potential x position
+	 * 
+	 * @param y - potential y position
+	 *            
 	 * @return - true if not already occupied or false if occupied
+	 * 
 	 */
-	public boolean isCurrentPositionValid(int x, int y) {
-		for (Node c : this.getCellGroup().getChildren()) {
-			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
-				return false;
+	public boolean isCurrentPositionValid(int x, int y) { // takes an x and y position as parameters
+		for (Node c : this.getCellGroup().getChildren()) { 
+			if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) { // if cell c's x&y are equal to arguments x&y
+				return false;														// won't place another cell in that location
 			}
 		}
 		return true;
@@ -43,7 +45,6 @@ public class Grid {
 	 * (cellGroup)
 	 */
 	public void removeAliveCells() {
-		System.out.println("called remove alive cells");
 		for (AliveCell c : getCondemned()) {
 			getCellGroup().getChildren().remove(c);
 		}
@@ -53,15 +54,15 @@ public class Grid {
 	 * A method to set up the initial alive cells in a testing configuration TODO:
 	 * make this random or on click
 	 * 
-	 * @param worldGrid - the Grid object the simulation is running
+	 * @param numOfCells - the initial number of cells we want randomly placed in the world
 	 */
 	public void initialiseAliveCells(int numOfCells) {
 
 		for (int i = 0; i < numOfCells; i++) {
 			int potnX = generatePosition("x");
 			int potnY = generatePosition("y");
-			// call checkmethod
-			while (!(isCurrentPositionValid(potnX, potnY))) {
+			// calls method checking if cell can be placed at position
+			while (!(isCurrentPositionValid(potnX, potnY))) { 
 				potnX = generatePosition("x");
 				potnY = generatePosition("y");
 			}
@@ -73,21 +74,17 @@ public class Grid {
 	}
 
 	/**
-	 * adds any cell with more than 3 or less than 2 neighbours into condemned
-	 * ArrayList resets this list first.
+	 * Adds any cell with more than 3 or less than 2 neighbours into condemned ArrayList.
+	 * Resets this list first.
 	 */
 	public void addCondemned() {
-		System.out.println("called addCondemned");
 		condemned = new ArrayList<>();
 		for (Node c : getCellGroup().getChildren()) {
 			AliveCell cell = (AliveCell) c;
 			if (!cell.isCellAlive()) {
-				// System.out.println(cell.getxPos() + " " + cell.getyPos() + " Neighbour count
-				// = " + cell.getNeighbourCount());
 				condemned.add((AliveCell) c);
 			}
 		}
-		// System.out.println("Condemned size =" + condemned.size());
 	}
 
 	/**
@@ -97,61 +94,58 @@ public class Grid {
 	 * cells
 	 */
 	public void updateGrid() {
-		// TODO: everything
-		// remove dead cells
-		// call update on alive cells
-		System.out.println("called updategrid");
 		for (AliveCell c : getNewlySpawnedCells()) {
 			addCell(c);
 		}
-		getNewlySpawnedCells().clear(); // now clear for use with next update
-		System.out.println(getNewlySpawnedCells() + " this should be empty");
+		// clears both ArrayLists for use with next update
+		getNewlySpawnedCells().clear();
 		getCurrentTestCells().clear();
-		System.out.println(getCurrentTestCells() + " this should be empty");
 
 		for (Node c : getCellGroup().getChildren()) {
 			AliveCell cell = (AliveCell) c;
 			cell.update(this);
-			System.out.println("update cell called");
 		}
-		// add newly spawned AliveCells to group
-
 	}
 
 	/**
-	 * Generates a random Position object for an Alive cell, used for initialising
-	 * simulation
+	 * Generates a random x & y coordinate for an Alive cell, 
+	 * used for initialising simulation
 	 * 
-	 * @return - returns a new Position Object
+	 * @return - returns either (column * cell size) for x, 
+	 * 			or (row * cell size) for y.
+	 * 			If parameter passes neither "x" nor "y", returns 0.
 	 */
 	public int generatePosition(String pos) {
-		// TODO make relative to col/row eg height * row
 		int col;
 		int row;
 		switch (pos) {
 		case "x":
-			col = (int) (Math.random() * 10 + 40); // gives random column number between 0 and 20
+			col = (int) (Math.random() * 10 + 40); // gives random column number between 10 and 40
 			return col * Cell.getSize();
 		case "y":
-			row = (int) (Math.random() * 10 + 40); // gives random row number between 0 and 20
+			row = (int) (Math.random() * 10 + 40); // gives random row number between 10 and 40
 			return row * Cell.getSize();
 		}
 		return 0;
 	}
 
 	/**
-	 * Adds AliveCell to cellGroup and relocates it ti its internal x and y
-	 * positions
+	 * Adds AliveCell to cellGroup and relocates it to its internal x and y positions
 	 * 
-	 * @param cell
-	 *            - the cell to add to the cellGroup's collection
+	 * @param cell  - the cell to add to the cellGroup's collection
 	 */
 	public void addCell(AliveCell cell) {
-		System.out.println("called addcell");
 		cellGroup.getChildren().add(cell);
 		cell.relocate(cell.getxPos(), cell.getyPos());
 	}
-
+	
+	/**
+	 * Tests to see if the space a TestCell would occupy is free
+	 * 
+	 * @param x - x coordinate of cell
+	 * @param y - y coordinate of cell
+	 * @return - returns true only if space at given x&y coordinate is empty
+	 */
 	public boolean isTestCellEmpty(int x, int y) {
 		for (TestCell c : currentTestCells) {
 			if (x == c.getxPos() && y == c.getyPos())
@@ -159,6 +153,8 @@ public class Grid {
 		}
 		return true;
 	}
+
+	// accessor methods
 
 	public Group getCellGroup() {
 		return cellGroup;
