@@ -31,7 +31,7 @@ import javafx.scene.Scene;
  */
 public class UI extends Application {
 
-	private int startWidth = 600;
+	private int startWidth = 650;
 	private int startHeight = 400;
 
 	private BorderPane parentPane = new BorderPane();
