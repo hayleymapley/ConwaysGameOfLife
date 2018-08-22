@@ -36,7 +36,6 @@ public class UI extends Application {
 	private Pane controlPane = new Pane(); // control pane (for adding buttons)
 	private HBox controlBox = new HBox(); // for containing buttons
 	private Grid worldGrid = new Grid();
-	
 
 	private Button playPause = new Button();
 	private Button restart = new Button();
@@ -96,7 +95,7 @@ public class UI extends Application {
 				worldGrid.getCellGroup().getChildren().clear();
 				worldGrid.getCurrentTestCells().clear();
 				worldGrid.getNewlySpawnedCells().clear();
-				initialiseWorldGrid(); 
+				initialiseWorldGrid();
 
 			}
 		});
@@ -133,32 +132,6 @@ public class UI extends Application {
 	public void generateInitialCells(int numOfCells) {
 		worldGrid.initialiseAliveCells(numOfCells);
 	}
-
-	
-
-	
-
-	
-
-	// public void removeAliveCells() {
-	// int size = worldGrid.getCellGroup().getChildren().size();
-	// for(int i = 0; i < size; i++) {
-	// AliveCell cell = (AliveCell)worldGrid.getCellGroup().getChildren().get(i);
-	// if(!cell.isCellAlive()) {
-	// worldGrid.getCellGroup().getChildren().remove(i);
-	// size --;
-	// }
-	// }
-	// }
-
-	// public boolean isCurrentPositionValid(int x, int y) {
-	// for (Node c: worldGrid.getCellGroup().getChildren()) {
-	// if (((AliveCell) c).getxPos() == x && ((AliveCell) c).getyPos() == y) {
-	// return false;
-	// }
-	// }
-	// return true;
-	// }
 
 	/**
 	 * Initializes panes and pane nesting
