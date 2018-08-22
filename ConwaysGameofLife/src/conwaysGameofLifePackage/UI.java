@@ -1,6 +1,5 @@
 package conwaysGameofLifePackage;
 
-import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -14,14 +13,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.stage.*;
 
 /**
- * This class draws the UI and any cells contained in the Grids HashMap
+ * This class handles animation and the initialisation of the Grid object.
  * 
- * @author Group3
+ * @author TeamFriendshipNumber3
  *
  */
 public class UI extends Application {
@@ -29,63 +25,62 @@ public class UI extends Application {
 	private int startWidth = 600;
 	private int startHeight = 400;
 
-	// private Group displayGroup = new Group(); //TODO: add to group?
-	private BorderPane canvas = new BorderPane(); // parent pane
-	private ScrollPane scrollPane = new ScrollPane();
-	private Pane simulationPane = new Pane(); // simulation pane TODO: make infinite
-	private Pane controlPane = new Pane(); // control pane (for adding buttons)
-	private HBox controlBox = new HBox(); // for containing buttons
+	private BorderPane parentPane = new BorderPane();
+	private ScrollPane scrollPane = new ScrollPane();  // TODO: make the scene pannable
+	private Pane animationPane = new Pane();
+	
 	private Grid worldGrid = new Grid();
 
+	private Pane controlPane = new Pane(); // controlPane - contains controlBox
+	private HBox controlBox = new HBox(); // controlBox - contains buttons
 	private Button playPause = new Button();
 	private Button restart = new Button();
 	private Button quit = new Button();
 
 	/**
-	 * Main Entry point for the application
+	 * Main entry point for the application
 	 * <p>
-	 * Initializes Panes (nests panes from scene down) Initializes Grid (adds
-	 * initial layout of AliveCells) Runs Timeline EventHandlers for buttons
+	 * Initializes Pane objects
+	 * Initializes Grid object
+	 * Initializes Timeline EventHandlers for buttons
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		initialiseWorldGrid();
-		initialisePanes();
+		this.initialiseWorldGrid();
+		this.initialisePanes();
 
 		KeyFrame frame = new KeyFrame(Duration.millis(200), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO check survival boolean
-				System.out.println("------------------------------");
-				worldGrid.addCondemned();
+				// Adds Cell objects which must die in the next generation to a 'hit' list
+				worldGrid.addCondemned();		
+				// Removes the Cell objects which are in the 'hit' list from the cellGroup
 				worldGrid.removeAliveCells();
+				// Updates all objects in Grid object
 				worldGrid.updateGrid();
-				// update cells - calling on grid
-				// draw cells - calling on grid which has hashmap
 			}
 		});
 
+		Scene mainScene = new Scene(parentPane, startWidth, startHeight);
+		
 		Timeline timeline = new Timeline(frame);
 		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
-		timeline.play();
 
 		primaryStage.setTitle("Game of Life");
-		Scene mainScene = new Scene(canvas, startWidth, startHeight);
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
-			int i = 0; // to keep track of odd/even number of clicks so we can use as a toggle button
-
+			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
 			@Override
 			public void handle(ActionEvent event) {
-				if (i % 2 == 0) {
-					timeline.pause(); // on first press will pause
+				if (click % 2 == 0) {
+					timeline.play(); // on first press will pause
 				} else {
-					timeline.play(); // every second press will play
+					timeline.pause(); // every second press will play
 				}
-				i++;
+				click++;
 			}
 		});
 
@@ -126,7 +121,7 @@ public class UI extends Application {
 	public void initialiseWorldGrid() {
 		worldGrid = new Grid();
 		worldGrid.initialiseAliveCells(40);
-		simulationPane.getChildren().add(worldGrid.getCellGroup()); // calls on HashMap in grid
+		animationPane.getChildren().add(worldGrid.getCellGroup()); // calls on HashMap in grid
 	}
 
 	public void generateInitialCells(int numOfCells) {
@@ -140,9 +135,9 @@ public class UI extends Application {
 		initialiseButtons();
 		controlPane.getChildren().add(controlBox);
 
-		scrollPane.setContent(simulationPane);
-		canvas.setTop(controlPane);
-		canvas.setCenter(scrollPane);
+		scrollPane.setContent(animationPane);
+		parentPane.setTop(controlPane);
+		parentPane.setCenter(scrollPane);
 	}
 
 	public static void main(String[] args) {
