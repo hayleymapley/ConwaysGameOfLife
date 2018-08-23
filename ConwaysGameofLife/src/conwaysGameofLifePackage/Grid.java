@@ -147,8 +147,8 @@ public class Grid {
 		return true;
 	}
 
+	
 	// accessor methods
-
 	public Group getCellGroup() {
 		return cellGroup;
 	}

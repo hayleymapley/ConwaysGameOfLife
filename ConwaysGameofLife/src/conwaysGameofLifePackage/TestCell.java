@@ -2,19 +2,23 @@ package conwaysGameofLifePackage;
 
 public class TestCell extends Cell {
 	
-	// default constructor
+	/**
+	 * Default constructor
+	 */
 	public TestCell() {
 		super();
 	}
 	
-	// overloaded constructor
+	/**
+	 * Overloaded constructor - sets x and y of cell
+	 * @param x
+	 * @param y
+	 */
 	public TestCell(int x, int y) {
 		super();
 		setxPos(x);
 		setyPos(y);
 	}
-	
-	// methods
 	
 	/**
 	 * Update method for test cells. 

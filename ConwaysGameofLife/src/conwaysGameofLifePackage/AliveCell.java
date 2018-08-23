@@ -4,19 +4,23 @@ import javafx.scene.Node;
 
 public class AliveCell extends Cell {
 
-	// default constructor
+	/**
+	 *  Default constructor
+	 */
 	public AliveCell() {
 		super();
 		this.setCellAlive(true);
 	}
 
-	// overloaded constructor
+	/**
+	 * Overloaded constructor - sets x and y of cell
+	 * @param x
+	 * @param y
+	 */
 	public AliveCell(int x, int y) {
 		super(x, y);
 		this.setCellAlive(true);
 	}
-	
-	// methods
 	
 	/**
 	 * AliveCells update method.

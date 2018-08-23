@@ -114,10 +114,8 @@ public class UI extends Application {
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 
-//		scrollPane.setOnMousePressed(value);
-
 		playPause.setOnAction(new EventHandler<ActionEvent>() {
-			int click = 0; 		// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
+			int click = 0; 				// Keeps track of odd/even number of clicks so we can use as a rudimentary toggle button
 			@Override
 			public void handle(ActionEvent event) {
 				if (click % 2 == 0) {

@@ -7,31 +7,32 @@ import javafx.scene.shape.StrokeType;
 
 public class Cell extends Rectangle {
 
-	//fields
+	// Cell fields
 	private boolean isCellAlive;
 	private final static int size = 7;
 	private int xPos, yPos;
 	private int neighbourCount;
 
-	// default constructor
+	/**
+	 *  Default constructor
+	 */
 	public Cell() {
 		super(size, size, Color.LIGHTBLUE);
 		this.setStrokeType(StrokeType.INSIDE);
 		this.setStroke(Color.CORNFLOWERBLUE);
 	}
 	
-	// overloaded Constructor
+	/**
+	 * Overloaded Constructor - takes x and y and sets the local fields
+	 * @param xPos
+	 * @param yPos
+	 */
 	public Cell(int xPos, int yPos) {
 		super(size, size, Color.LIGHTBLUE);
 		this.setStrokeType(StrokeType.INSIDE);
 		this.setStroke(Color.CORNFLOWERBLUE);
 		this.xPos = xPos;
 		this.yPos = yPos;
-	}
-
-	//methods
-	public void update() { 
-
 	}
 	
 	/**
@@ -42,12 +43,10 @@ public class Cell extends Rectangle {
 	 * @return - returns the number of neighbours a cell has
 	 */
 	public int checkNeighbours(Grid worldGrid) {
+		int count = 0; //neighbour count
 		
-		int count = 0;
-
 		for(Node c : worldGrid.getCellGroup().getChildren()) {
-
-			AliveCell cell = (AliveCell) c;
+			AliveCell cell = (AliveCell) c; //casts cell node
 
 			// checks top left
 			if(this.getxPos() - size == cell.getxPos() && this.getyPos() - size == cell.getyPos()) {
@@ -87,7 +86,7 @@ public class Cell extends Rectangle {
 	}
 
 
-	// accessor methods
+	// Accessors
 	public static int getSize() {
 		return size;
 	}
