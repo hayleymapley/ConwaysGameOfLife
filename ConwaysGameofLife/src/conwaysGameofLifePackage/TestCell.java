@@ -10,9 +10,9 @@ public class TestCell extends Cell {
 	}
 	
 	/**
-	 * Overloaded constructor - sets x and y of cell
-	 * @param x
-	 * @param y
+	 * Overloaded constructor - sets x and y positions of cell
+	 * @param x - the x position
+	 * @param y - the y position
 	 */
 	public TestCell(int x, int y) {
 		super();

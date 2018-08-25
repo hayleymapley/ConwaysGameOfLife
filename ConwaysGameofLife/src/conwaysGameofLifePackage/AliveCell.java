@@ -14,8 +14,8 @@ public class AliveCell extends Cell {
 
 	/**
 	 * Overloaded constructor - sets x and y of cell
-	 * @param x
-	 * @param y
+	 * @param x - x position
+	 * @param y - y position
 	 */
 	public AliveCell(int x, int y) {
 		super(x, y);

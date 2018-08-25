@@ -138,6 +138,8 @@ public class UI extends Application {
 				worldGrid.getCurrentTestCells().clear();
 				// Clear all Cell objects recently conceived
 				worldGrid.getNewlySpawnedCells().clear();
+				//resets generation count
+				count = 0;
 				// Create the Grid, adding Cell objects within
 				initialiseWorldGrid();
 			}
