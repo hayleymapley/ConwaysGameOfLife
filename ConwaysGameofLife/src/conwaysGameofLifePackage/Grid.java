@@ -101,8 +101,10 @@ public class Grid {
 	}
 
 	/**
-	 * Generates a random x & y coordinate for an Alive cell, 
+	 * Generates a random x and y coordinate for an Alive cell, 
 	 * used for initializing simulation
+	 * 
+	 * @param pos - takes string "x" or "y" as a string to determine if generating x or y position 
 	 * 
 	 * @return - returns either (column * cell size) for x, 
 	 * 			or (row * cell size) for y.
@@ -137,7 +139,7 @@ public class Grid {
 	 * 
 	 * @param x - x coordinate of cell
 	 * @param y - y coordinate of cell
-	 * @return - returns true only if space at given x&y coordinate is empty
+	 * @return - returns true only if space at given x and y coordinate is empty
 	 */
 	public boolean isTestCellEmpty(int x, int y) {
 		for (TestCell c : currentTestCells) {

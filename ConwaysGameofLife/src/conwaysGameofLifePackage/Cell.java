@@ -24,8 +24,8 @@ public class Cell extends Rectangle {
 	
 	/**
 	 * Overloaded Constructor - takes x and y and sets the local fields
-	 * @param xPos
-	 * @param yPos
+	 * @param xPos - the x position
+	 * @param yPos - the y position
 	 */
 	public Cell(int xPos, int yPos) {
 		super(size, size, Color.LIGHTBLUE);
