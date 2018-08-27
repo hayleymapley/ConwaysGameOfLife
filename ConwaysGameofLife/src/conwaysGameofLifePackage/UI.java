@@ -30,7 +30,7 @@ import javafx.scene.Scene;
 
 /**
  * This class handles animation and the initialization of the Grid object.
- * 
+ *  
  * @author TeamFriendshipNumber3
  *
  */
